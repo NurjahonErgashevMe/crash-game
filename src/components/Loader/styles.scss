@@ -1,0 +1,79 @@
+.loader-wrapper{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.game__loader {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 22px;
+
+    @media (min-width: 768px) {
+        width: 113px;
+        height: 113px;
+    }
+}
+
+.loader__big-lines {
+    animation-name: lines-animation;
+    animation-timing-function: linear;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    transform-origin: center;
+}
+
+.loader__little-lines {
+    animation-name: lines-animation;
+    animation-timing-function: linear;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    transform-origin: center;
+}
+
+.loader__jetpack {
+    animation-name: jetpack-animation;
+    animation-timing-function: ease-in-out;
+    animation-duration: .5s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+.loader__fire {
+    animation-name: fire-animation;
+    animation-timing-function: ease-in-out;
+    animation-duration: .5s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+.game__waiting {
+    font-family: "Rocketfont";
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #fafafa;
+    text-transform: uppercase;
+}
+
+@keyframes fire-animation {
+    100% {
+        transform: translateY(3px);
+    }
+}
+
+@keyframes jetpack-animation {
+    100% {
+        transform: translateY(-3px);
+    }
+}
+
+@keyframes lines-animation {
+    100% {
+        transform: rotate(360deg);
+    }
+}
