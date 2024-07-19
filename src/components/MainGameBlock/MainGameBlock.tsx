@@ -94,8 +94,14 @@ const MainGameBlock: FC = () => {
                           ? 0
                           : counter < 1.8
                           ? (counter - 1) * -170
-                          : counter <= 2.2
-                          ? -270
+                          : counter <= 2.0
+                          ? (counter - 1) * -190
+                          : counter <= 2.15
+                          ? (counter - 1) * -200
+                          : counter <= 2.3
+                          ? (counter - 1) * -220
+                          : counter <= 2.5
+                          ? (counter - 1) * -240
                           : imageStopNumber < counter
                           ? imageStopNumber * -170
                           : counter * -170,
