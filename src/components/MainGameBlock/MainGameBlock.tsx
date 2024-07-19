@@ -8,7 +8,7 @@ const MainGameBlock: FC = () => {
   const [gameOver, setGameOver] = useState(false);
   const [showGameOver, setShowGameOver] = useState(false);
   const [showLoader, setShowLoader] = useState(true);
-  const [countStopNumber, setCountStopNumber] = useState(100);
+  const [countStopNumber, setCountStopNumber] = useState(3.1);
   const [imageStopNumber, setImageStopNumber] = useState(2.7);
   const [linePercentage, setLinePercentage] = useState(0);
 
@@ -85,14 +85,14 @@ const MainGameBlock: FC = () => {
                     className={styles.boyWrapper}
                     animate={{
                       x: gameOver
-                        ? imageStopNumber * 380 + 1000
+                        ? imageStopNumber * 420 + 1000
                         : imageStopNumber < counter
-                        ? imageStopNumber * 380
-                        : counter * 380,
+                        ? imageStopNumber * 420
+                        : counter * 420,
                       y:
                         imageStopNumber < counter
-                          ? imageStopNumber * -130
-                          : counter * -130,
+                          ? imageStopNumber * -170
+                          : counter * -170,
                       rotate: 1,
                     }}
                     transition={{ type: "spring" }}
