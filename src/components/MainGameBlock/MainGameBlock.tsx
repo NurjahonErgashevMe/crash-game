@@ -92,16 +92,34 @@ const MainGameBlock: FC = () => {
                       y:
                         counter < 1
                           ? 0
-                          : counter < 1.8
+                          : counter < 1.1
                           ? (counter - 1) * -170
-                          : counter <= 2.0
+                          : counter < 1.2
+                          ? (counter - 1) * -180
+                          : counter < 1.3
                           ? (counter - 1) * -190
-                          : counter <= 2.15
+                          : counter < 1.4
                           ? (counter - 1) * -200
-                          : counter <= 2.3
+                          : counter < 1.5
+                          ? (counter - 1) * -210
+                          : counter < 1.6
                           ? (counter - 1) * -220
-                          : counter <= 2.5
+                          : counter < 1.7
+                          ? (counter - 1) * -230
+                          : counter < 1.8
                           ? (counter - 1) * -240
+                          : counter < 1.9
+                          ? (counter - 1) * -250
+                          : counter < 2.0
+                          ? (counter - 1) * -260
+                          : counter < 2.1
+                          ? (counter - 1) * -270
+                          : counter < 2.2
+                          ? (counter - 1) * -280
+                          : counter < 2.3
+                          ? (counter - 1) * -290
+                          : counter < 2.4
+                          ? (counter - 1) * -300
                           : imageStopNumber < counter
                           ? imageStopNumber * -170
                           : counter * -170,
