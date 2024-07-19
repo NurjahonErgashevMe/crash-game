@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 const MainGameBlock: FC = () => {
   const [counter, setCounter] = useState(1.0);
   const [gameOver, setGameOver] = useState(false);
+  const [showGameOver, setShowGameOver] = useState(false);
   const [countStopNumber, setCountStopNumber] = useState(3.1);
   const [imageStopNumber, setImageStopNumber] = useState(2.1);
 
@@ -29,6 +30,15 @@ const MainGameBlock: FC = () => {
     return () => clearInterval(interval);
   }, [counter, gameOver, countStopNumber]);
 
+  useEffect(() => {
+    if (gameOver) {
+      const timer = setTimeout(() => {
+        setShowGameOver(true);
+      }, 300); // 300ms delay before showing game over
+      return () => clearTimeout(timer);
+    }
+  }, [gameOver]);
+
   return (
     <div className={styles.main}>
       <div className={styles.wrapper}>
@@ -36,7 +46,7 @@ const MainGameBlock: FC = () => {
           <div className={styles.count}>
             x<span>{counter.toFixed(2)}</span>
           </div>
-          {gameOver ? (
+          {showGameOver ? (
             <>
               <br />
               <div className={styles.gameOver}>Game Over</div>
@@ -45,10 +55,11 @@ const MainGameBlock: FC = () => {
             <motion.div
               className={styles.boyWrapper}
               animate={{
-                x:
-                  imageStopNumber < counter
-                    ? imageStopNumber * 380
-                    : counter * 380,
+                x: gameOver
+                  ? imageStopNumber * 380 + 1000
+                  : imageStopNumber < counter
+                  ? imageStopNumber * 380
+                  : counter * 380,
                 y:
                   imageStopNumber < counter
                     ? imageStopNumber * -130
