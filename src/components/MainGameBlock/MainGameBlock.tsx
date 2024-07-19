@@ -6,7 +6,7 @@ const MainGameBlock: FC = () => {
   const [counter, setCounter] = useState(1.0);
   const [gameOver, setGameOver] = useState(false);
   const [showGameOver, setShowGameOver] = useState(false);
-  const [countStopNumber, setCountStopNumber] = useState(3.1);
+  const [countStopNumber, setCountStopNumber] = useState(1.5);
   const [imageStopNumber, setImageStopNumber] = useState(2.1);
 
   useEffect(() => {
@@ -15,12 +15,11 @@ const MainGameBlock: FC = () => {
     if (counter < countStopNumber && !gameOver) {
       interval = setInterval(() => {
         setCounter((prevCounter) => {
-          const newCounter = Math.min(prevCounter + 0.01, countStopNumber);
-          if (newCounter >= countStopNumber - 0.01) {
-            // Small threshold for precision issues
+          const newCounter = parseFloat((prevCounter + 0.01).toFixed(2));
+          if (newCounter >= countStopNumber) {
             setGameOver(true);
           }
-          return parseFloat(newCounter.toFixed(2));
+          return newCounter;
         });
       }, 30); // Adjust the interval as needed
     } else if (interval) {
