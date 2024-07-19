@@ -1,6 +1,11 @@
 import { FC } from "react";
-import "./styles.scss"
-export const Loader: FC = () => {
+import "./styles.scss";
+
+interface LoaderProps {
+  duration?: number; // duration in seconds
+}
+
+export const Loader: FC<LoaderProps> = ({ duration = 10 }) => {
   return (
     <div className="loader-wrapper">
       <svg
@@ -103,6 +108,14 @@ export const Loader: FC = () => {
       <span className="game__waiting" data-lang="waiting">
         Ожидание ставки
       </span>
+      <div
+        className="straight-line-loader"
+        style={
+          { "--animation-duration": `${duration}s` } as React.CSSProperties
+        }
+      >
+        <div className="line"></div>
+      </div>
     </div>
   );
 };
