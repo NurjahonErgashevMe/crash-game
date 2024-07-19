@@ -36,11 +36,13 @@
   left: 0;
   bottom: 0;
   z-index: 10000 !important;
+  transform-origin: top center;
 }
 
 .boyImage {
   height: 300px;
   z-index: 10000 !important;
+  animation: bounce 0.5s infinite alternate;
 }
 
 .fireImage {
@@ -50,6 +52,7 @@
   top: 210px;
   left: -90px;
   filter: drop-shadow(0 0 10px yellow);
+  animation: bounce2 0.5s infinite alternate;
   z-index: 10000 !important;
 }
 
@@ -77,4 +80,23 @@
   margin-top: -150px;
   z-index: 1;
   position: relative;
+  animation: bounce 0.5s infinite alternate;
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0) translateX(0);
+  }
+  100% {
+    transform: translateY(-5px) translateX(-5px);
+  }
+}
+
+@keyframes bounce2 {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-10px);
+  }
 }

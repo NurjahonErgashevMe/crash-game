@@ -8,7 +8,7 @@ const MainGameBlock: FC = () => {
   const [gameOver, setGameOver] = useState(false);
   const [showGameOver, setShowGameOver] = useState(false);
   const [showLoader, setShowLoader] = useState(true);
-  const [countStopNumber, setCountStopNumber] = useState(3.1);
+  const [countStopNumber, setCountStopNumber] = useState(100);
   const [imageStopNumber, setImageStopNumber] = useState(2.7);
   const [linePercentage, setLinePercentage] = useState(0);
 
