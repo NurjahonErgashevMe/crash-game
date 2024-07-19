@@ -7,6 +7,10 @@
 .wrapper {
   height: 100%;
   text-align: center;
+  background-image: url("cloud.jpg");
+  /* background-position: center; */
+  background-size: contain;
+  background-repeat: repeat;
 }
 
 .count {
@@ -31,10 +35,12 @@
   position: absolute;
   left: 0;
   bottom: 0;
+  z-index: 10000 !important;
 }
 
 .boyImage {
   height: 300px;
+  z-index: 10000 !important;
 }
 
 .fireImage {
@@ -44,6 +50,7 @@
   top: 210px;
   left: -90px;
   filter: drop-shadow(0 0 10px yellow);
+  z-index: 10000 !important;
 }
 
 .gameOver {
@@ -52,4 +59,22 @@
   font-weight: 700;
   color: #fff;
   text-shadow: 0 0 10px white;
+}
+
+.graphicImageOver {
+  width: 100%;
+  height: 100%;
+  margin-top: -300px;
+  object-fit: contain;
+  z-index: 1;
+  position: relative;
+}
+
+.graphicImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  margin-top: -150px;
+  z-index: 1;
+  position: relative;
 }

@@ -6,8 +6,9 @@ const MainGameBlock: FC = () => {
   const [counter, setCounter] = useState(1.0);
   const [gameOver, setGameOver] = useState(false);
   const [showGameOver, setShowGameOver] = useState(false);
-  const [countStopNumber, setCountStopNumber] = useState(1.5);
-  const [imageStopNumber, setImageStopNumber] = useState(2.1);
+  const [countStopNumber, setCountStopNumber] = useState(3.1);
+  const [imageStopNumber, setImageStopNumber] = useState(2.7);
+  const [linePercentage, setLinePercentage] = useState(0);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -25,6 +26,9 @@ const MainGameBlock: FC = () => {
     } else if (interval) {
       clearInterval(interval);
     }
+
+    // Update linePercentage based on counter
+    setLinePercentage(counter * 33); // Example calculation, adjust as needed
 
     return () => clearInterval(interval);
   }, [counter, gameOver, countStopNumber]);
@@ -49,27 +53,46 @@ const MainGameBlock: FC = () => {
             <>
               <br />
               <div className={styles.gameOver}>Game Over</div>
+              <img
+                src="graphic.svg"
+                alt="curved line"
+                className={styles.graphicImageOver}
+                style={{
+                  clipPath: `polygon(0 0, ${linePercentage}% 0, ${linePercentage}% 100%, 0% 100%)`,
+                }}
+              />
             </>
           ) : (
-            <motion.div
-              className={styles.boyWrapper}
-              animate={{
-                x: gameOver
-                  ? imageStopNumber * 380 + 1000
-                  : imageStopNumber < counter
-                  ? imageStopNumber * 380
-                  : counter * 380,
-                y:
-                  imageStopNumber < counter
-                    ? imageStopNumber * -130
-                    : counter * -130,
-                rotate: 1,
-              }}
-              transition={{ type: "spring" }}
-            >
-              <img src="boy.webp" alt="boy" className={styles.boyImage} />
-              <img src="fire.svg" alt="fire" className={styles.fireImage} />
-            </motion.div>
+            <>
+              <motion.div
+                className={styles.boyWrapper}
+                animate={{
+                  x: gameOver
+                    ? imageStopNumber * 380 + 1000
+                    : imageStopNumber < counter
+                    ? imageStopNumber * 380
+                    : counter * 380,
+                  y:
+                    imageStopNumber < counter
+                      ? imageStopNumber * -130
+                      : counter * -130,
+                  rotate: 1,
+                }}
+                transition={{ type: "spring" }}
+              >
+                <img src="boy.webp" alt="boy" className={styles.boyImage} />
+                <img src="fire.svg" alt="fire" className={styles.fireImage} />
+              </motion.div>
+              <img
+                src="graphic.svg"
+                alt="curved line"
+                className={styles.graphicImage}
+                style={{
+                  opacity: 1,
+                  clipPath: `polygon(0 0, ${linePercentage}% 0, ${linePercentage}% 100%, 0% 100%)`,
+                }}
+              />
+            </>
           )}
         </>
       </div>
