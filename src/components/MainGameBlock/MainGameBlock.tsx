@@ -8,7 +8,7 @@ const MainGameBlock: FC = () => {
   const [gameOver, setGameOver] = useState(false);
   const [showGameOver, setShowGameOver] = useState(false);
   const [showLoader, setShowLoader] = useState(true);
-  const [countStopNumber, setCountStopNumber] = useState(3.1);
+  const [countStopNumber, setCountStopNumber] = useState(3.0);
   const [imageStopNumber, setImageStopNumber] = useState(2.7);
   const [linePercentage, setLinePercentage] = useState(0);
 
@@ -16,7 +16,7 @@ const MainGameBlock: FC = () => {
     // Hide loader after 5 seconds
     const loaderTimer = setTimeout(() => {
       setShowLoader(false);
-    }, 5000);
+    }, 0);
 
     return () => clearTimeout(loaderTimer);
   }, []);
@@ -90,7 +90,13 @@ const MainGameBlock: FC = () => {
                         ? imageStopNumber * 420
                         : counter * 420,
                       y:
-                        imageStopNumber < counter
+                        counter < 1
+                          ? 0
+                          : counter < 1.8
+                          ? (counter - 1) * -170
+                          : counter <= 2.2
+                          ? -270
+                          : imageStopNumber < counter
                           ? imageStopNumber * -170
                           : counter * -170,
                       rotate: 1,
