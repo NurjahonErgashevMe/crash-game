@@ -1,31 +1,102 @@
 .main {
   width: 100%;
   height: 100%;
-  /* background-color: red; */
+  position: relative;
 }
 
-.boy-wrapper {
-  position: absolute;
-  width: 24%;
-  margin-top: 62%;
-  margin-left: -64%;
-  transform: rotate(-138deg);
-  transform-origin: center center;
+.wrapper {
+  height: 100%;
+  text-align: center;
+  background-image: url("cloud.jpg");
+  /* background-position: center; */
+  background-size: contain;
+  background-repeat: repeat;
 }
 
-.fire {
-  position: absolute;
-  width: 24%;
-  margin-top: 62%;
-  margin-left: -64%;
-  transform: rotate(-138deg);
-  transform-origin: center center;
-  max-width: 100px;
+.count {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 5rem;
+  font-weight: 700;
+  color: blueviolet;
+  display: block;
 }
 
-.boy {
+.count span {
+  font-size: 6rem;
+  font-weight: 750;
+}
+
+.boyWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
   position: absolute;
-  transition: all 0.32s ease 0s;
-  width: 50%;
-  max-width: 200px;
+  left: 0;
+  bottom: 0;
+  z-index: 10000 !important;
+  transform-origin: top center;
+}
+
+.boyImage {
+  height: 200px;
+  z-index: 10000 !important;
+  animation: bounce 1s infinite alternate;
+}
+
+.fireImage {
+  height: 100px;
+  rotate: 220deg;
+  position: absolute;
+  top: 140px;
+  left: -45px;
+  filter: drop-shadow(0 0 10px yellow);
+  animation: bounce2 1s infinite alternate;
+  z-index: 10000 !important;
+}
+
+.gameOver {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 5rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 0 10px white;
+}
+
+.graphicImageOver {
+  width: 100%;
+  height: 100%;
+  margin-top: -300px;
+  object-fit: contain;
+  z-index: 1;
+  position: relative;
+}
+
+.graphicImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  margin-top: -150px;
+  z-index: 1;
+  position: relative;
+  animation: bounce 1s infinite alternate;
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0) translateX(0);
+  }
+  100% {
+    transform: translateY(-5px) translateX(-5px);
+  }
+}
+
+@keyframes bounce2 {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-10px);
+  }
 }
