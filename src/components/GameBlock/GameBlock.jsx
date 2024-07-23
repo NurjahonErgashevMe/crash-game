@@ -6,9 +6,9 @@ import style from "./GameBlock.module.css";
 const GameBlock = () => {
   return (
     <div className={style.game}>
-      <HistoryGameBlock />
+      {/* <HistoryGameBlock /> */}
       <MainGameBlock />
-      <ButtonGameBlock />
+      {/* <ButtonGameBlock /> */}
     </div>
   );
 };

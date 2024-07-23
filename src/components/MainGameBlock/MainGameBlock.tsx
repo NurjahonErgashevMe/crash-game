@@ -1,155 +1,300 @@
-import { FC, useEffect, useState } from "react";
-import styles from "./MainGameBlock.module.css";
+import { FC, useEffect, useMemo, useRef, useState } from "react";
+import "./MainGameBlock.scss";
 import { motion } from "framer-motion";
+import { useCountUp } from "use-count-up";
+import clsx from "clsx";
 import { Loader } from "../Loader/Loader";
+import { useWindowDimensions } from "../../hooks/useWindowDimensions";
+import { getResponsiveOptions } from "./helpers/getResponsiveOptions";
+
+type TDimensions = {
+  width: number;
+  height: number;
+};
+
+const fixedThree = (number: string | number) =>
+  typeof number === "number" ? number.toFixed(3) : Number(number).toFixed(3);
 
 const MainGameBlock: FC = () => {
-  const [counter, setCounter] = useState(0);
-  const [gameOver, setGameOver] = useState(false);
-  const [showGameOver, setShowGameOver] = useState(false);
-  const [showLoader, setShowLoader] = useState(true);
-  const [countStopNumber, setCountStopNumber] = useState(3.0);
-  const [imageStopNumber, setImageStopNumber] = useState(2.7);
-  const [linePercentage, setLinePercentage] = useState(0);
+  const animWrapRef = useRef<HTMLDivElement>(null);
+  const [start, setStart] = useState<boolean>(false);
+  const [secondCountStatus, setSecondCountStatus] = useState<
+    "flying" | "left" | "right"
+  >("flying");
+  const [wrapperDimensions, setWrapperDimensions] = useState<TDimensions>();
+  const windowDimensions = useWindowDimensions();
 
-  useEffect(() => {
-    // Hide loader after 5 seconds
-    const loaderTimer = setTimeout(() => {
-      setShowLoader(false);
-    }, 0);
+  const wrapper_width = (multiply_by: number = 1): number =>
+    wrapperDimensions ? wrapperDimensions.width * multiply_by : 0;
+  const wrapper_height = (multiply_by: number = 1) =>
+    wrapperDimensions ? wrapperDimensions.height * multiply_by : 0;
 
-    return () => clearTimeout(loaderTimer);
-  }, []);
+  const countsResponsiveOptions = getResponsiveOptions(windowDimensions.width);
 
-  useEffect(() => {
-    let interval: NodeJS.Timeout;
-
-    if (!showLoader) {
-      if (counter < countStopNumber && !gameOver) {
-        interval = setInterval(() => {
-          setCounter((prevCounter) => {
-            const newCounter = parseFloat((prevCounter + 0.01).toFixed(2));
-            if (newCounter >= countStopNumber) {
-              setGameOver(true);
-            }
-            return newCounter;
-          });
-        }, 30); // Adjust the interval as needed
-      } else if (interval) {
-        clearInterval(interval);
+  const toggleStatus = () => {
+    switch (secondCountStatus) {
+      case "flying":
+        setSecondCountStatus("right");
+        wCountupResetRight();
+        wCountupBoyResetRight();
+        break;
+      case "right":
+        setSecondCountStatus("left");
+        wCountupResetLeft();
+        wCountupBoyResetLeft();
+        break;
+      case "left":
+        setSecondCountStatus("right");
+        wCountupResetRight();
+        wCountupBoyResetRight();
+        // hCountupReset2Bottom();
+        // setSecondCountStatus("top");
+        // wCountupResetTop();
+        // hCountupReset2Top();
+        break;
+      // case "top":
+      //   setSecondCountStatus("right");
+      //   wCountupResetRight();
+      //   hCountupReset2Bottom();
+      //   break;
+      default: {
+        setSecondCountStatus("flying");
       }
-
-      // Update linePercentage based on counter
-      setLinePercentage(counter * 33); // Example calculation, adjust as needed
     }
+  };
 
-    return () => clearInterval(interval);
-  }, [counter, gameOver, countStopNumber, showLoader]);
+  const { value: vwCountupBoy, reset: wCountupBoyReset } = useCountUp({
+    isCounting: start,
+    end: wrapper_width(0.789),
+    duration: 3,
+  });
+
+  const { value: vwCountupBoyRight, reset: wCountupBoyResetRight } = useCountUp(
+    {
+      isCounting: start,
+      start: wrapper_width(0.789),
+      end: wrapper_width(0.85),
+      duration: 3,
+      easing: "linear",
+      onComplete: () => toggleStatus(),
+    }
+  );
+  const { value: vwCountupBoyLeft, reset: wCountupBoyResetLeft } = useCountUp({
+    isCounting: start,
+    start: wrapper_width(0.85),
+    end: wrapper_width(0.789),
+    duration: 3,
+    easing: "linear",
+    onComplete: () => toggleStatus(),
+  });
+  const { value: vhCountupBoy, reset: hCountupBoyReset } = useCountUp({
+    isCounting: start,
+
+    ...countsResponsiveOptions({
+      small: {
+        duration: 3,
+        start: wrapper_height(1),
+        end: wrapper_height(0.1),
+      },
+      medium: {
+        duration: 3,
+        start: wrapper_height(1),
+        end: wrapper_height(0.19),
+      },
+      big: {
+        duration: 3,
+        start: wrapper_height(1.1),
+        end: wrapper_height(0.3),
+      },
+    }),
+    // small size
+    // duration: 3,
+    // start: wrapper_height(1),
+    // end: wrapper_height(0.1),
+
+    // middle size
+    // duration: 3,
+    // start: wrapper_height(1),
+    // end: wrapper_height(0.19),
+
+    // big size
+    // duration: 3,
+    // start: wrapper_height(1.1),
+    // end: wrapper_height(0.3),
+  });
+
+  // for line
+  const { value: vwCountup, reset: wCountupReset } = useCountUp({
+    isCounting: start,
+    end: wrapper_width(0.52),
+    duration: 3,
+  });
+  const { value: vwCountup2, reset: wCountupReset2 } = useCountUp({
+    isCounting: start,
+    end: wrapper_width(0.8),
+    duration: 3,
+  });
+
+  const { value: vwCountup2Left, reset: wCountupResetLeft } = useCountUp({
+    isCounting: start,
+    start: wrapper_width(0.85),
+    end: wrapper_width(0.8),
+    duration: 3,
+    easing: "linear",
+  });
+
+  const { value: vwCountup2Right, reset: wCountupResetRight } = useCountUp({
+    isCounting: start,
+    start: wrapper_width(0.8),
+    end: wrapper_width(0.85),
+    duration: 3,
+    easing: "linear",
+  });
+
+  const { value: vhCountup2, reset: hCountupReset2 } = useCountUp({
+    isCounting: start,
+
+    ...countsResponsiveOptions({
+      small: {
+        duration: 3,
+        start: wrapper_height(1.1),
+        end: wrapper_height(0.3),
+      },
+      medium: {
+        duration: 2.8,
+        start: wrapper_height(1.15),
+        end: wrapper_height(0.35),
+      },
+      big: {
+        duration: 3,
+        start: wrapper_height(1.2),
+        end: wrapper_height(0.35),
+      },
+    }),
+
+    // small size
+    // duration: 3,
+    // start: wrapper_height(1.1),
+    // end: wrapper_height(0.3),
+
+    // middle size
+    // duration: 2.8,
+    // start: wrapper_height(1.15),
+    // end: wrapper_height(0.32),
+
+    // big size
+    // duration: 3,
+    // start: wrapper_height(1.2),
+    // end: wrapper_height(0.35),
+  });
+  const secondCounts = useMemo<Record<"flying" | "left" | "right", number>>(
+    () => ({
+      flying: Number(vwCountup2),
+      left: Number(vwCountup2Left),
+      right: Number(vwCountup2Right),
+    }),
+    [vwCountup2, vwCountup2Left, vwCountup2Right]
+  );
+  const boyCounts = useMemo<Record<"flying" | "left" | "right", number>>(
+    () => ({
+      flying: Number(vwCountupBoy),
+      left: Number(vwCountupBoyLeft),
+      right: Number(vwCountupBoyRight),
+    }),
+    [vwCountupBoyRight, vwCountupBoyLeft, vwCountupBoy]
+  );
 
   useEffect(() => {
-    if (gameOver) {
-      const timer = setTimeout(() => {
-        setShowGameOver(true);
-      }, 300); // 300ms delay before showing game over
-      return () => clearTimeout(timer);
+    if (animWrapRef.current) {
+      setStart(true); //запускаем процесс
+      setWrapperDimensions({
+        width: animWrapRef.current?.clientWidth,
+        height: animWrapRef.current?.clientHeight,
+      });
+
+      setSecondCountStatus("flying");
+
+      wCountupBoyReset();
+      hCountupBoyReset();
+
+      wCountupReset();
+      wCountupReset2();
+      hCountupReset2();
     }
-  }, [gameOver]);
+  }, [animWrapRef.current]);
+
+  useEffect(() => {
+    if (animWrapRef.current) {
+      setWrapperDimensions({
+        width: animWrapRef.current?.clientWidth,
+        height: animWrapRef.current?.clientHeight,
+      });
+    }
+  }, [windowDimensions]);
 
   return (
-    <>
-      {showLoader ? (
-        <Loader duration={5} />
-      ) : (
-        <div className={styles.main}>
-          <div className={styles.wrapper}>
-            <>
-              <div className={styles.count}>
-                x<span>{counter.toFixed(2)}</span>
-              </div>
-              {showGameOver ? (
-                <>
-                  <br />
-                  <div className={styles.gameOver}>Game Over</div>
-                  <img
-                    src="graphic.svg"
-                    alt="curved line"
-                    className={styles.graphicImageOver}
-                    style={{
-                      clipPath: `polygon(0 0, ${linePercentage}% 0, ${linePercentage}% 100%, 0% 100%)`,
-                    }}
-                  />
-                </>
-              ) : (
-                <>
-                  <motion.div
-                    className={styles.boyWrapper}
-                    animate={{
-                      x: gameOver
-                        ? imageStopNumber * 420 + 1000
-                        : imageStopNumber < counter
-                        ? imageStopNumber * 420
-                        : counter * 420,
-                      y:
-                        counter < 1
-                          ? 0
-                          : counter < 1.1
-                          ? (counter - 1) * -170
-                          : counter < 1.2
-                          ? (counter - 1) * -180
-                          : counter < 1.3
-                          ? (counter - 1) * -190
-                          : counter < 1.4
-                          ? (counter - 1) * -200
-                          : counter < 1.5
-                          ? (counter - 1) * -210
-                          : counter < 1.6
-                          ? (counter - 1) * -220
-                          : counter < 1.7
-                          ? (counter - 1) * -230
-                          : counter < 1.8
-                          ? (counter - 1) * -240
-                          : counter < 1.9
-                          ? (counter - 1) * -250
-                          : counter < 2.0
-                          ? (counter - 1) * -260
-                          : counter < 2.1
-                          ? (counter - 1) * -270
-                          : counter < 2.2
-                          ? (counter - 1) * -280
-                          : counter < 2.3
-                          ? (counter - 1) * -290
-                          : counter < 2.4
-                          ? (counter - 1) * -300
-                          : imageStopNumber < counter
-                          ? imageStopNumber * -170
-                          : counter * -170,
-                      rotate: 1,
-                    }}
-                    transition={{ type: "spring" }}
-                  >
-                    <img src="boy.webp" alt="boy" className={styles.boyImage} />
-                    <img
-                      src="fire.svg"
-                      alt="fire"
-                      className={styles.fireImage}
-                    />
-                  </motion.div>
-                  <img
-                    src="graphic.svg"
-                    alt="curved line"
-                    className={styles.graphicImage}
-                    style={{
-                      opacity: 1,
-                      clipPath: `polygon(0 0, ${linePercentage}% 0, ${linePercentage}% 100%, 0% 100%)`,
-                    }}
-                  />
-                </>
-              )}
-            </>
+    <div className="wrapper">
+      {/* <Loader
+        duration={5}
+        className={clsx("loading", {
+          show: !start,
+        })}
+      /> */}
+      <div
+        className={clsx("lucky-jet", {
+          _animating: start,
+        })}
+        ref={animWrapRef}
+      >
+        <div
+          className={"lucky-jet__pilot"}
+          style={{
+            transform: `translate3d(${boyCounts[secondCountStatus]}px, ${vhCountupBoy}px, 0px)`,
+          }}
+        >
+          <div className="schedule-animate-img lucky-jet__pilot-img">
+            <img src="fire.svg" alt="fire" className="fire" />
+            <img src="boy.webp" alt="boy" className="boy" />
           </div>
         </div>
-      )}
-    </>
+        <svg className="lucky-jet__svg">
+          <defs>
+            <linearGradient id="grad" x1="0" x2="1" y1="0" y2="1">
+              <stop stop-color="#9d7aff" stop-opacity=".33"></stop>
+              <stop offset=".987" stop-color="#9d7aff" stop-opacity="0"></stop>
+            </linearGradient>
+            <linearGradient id="grad_stroke" x1="0" x2="1" y1="0" y2="1">
+              <stop stop-color="#9D7AFF"></stop>
+              <stop offset=".787" stop-color="#622BFC"></stop>
+              <stop offset="1" stop-color="#5c24fc" stop-opacity="0"></stop>
+            </linearGradient>
+          </defs>
+          <g>
+            <path
+              className="lucky-jet__svg-stroke"
+              fill="transparent"
+              stroke="url(#grad_stroke)"
+              d={`M 0 ${wrapper_height()} Q ${fixedThree(
+                Number(vwCountup)
+              )} ${wrapper_height()} ${fixedThree(
+                Number(secondCounts[secondCountStatus])
+              )} ${fixedThree(Number(vhCountup2))}`}
+            ></path>
+            <path
+              className="lucky-jet__svg-grad"
+              fill="url(#grad)"
+              d={`M 0 ${wrapper_height()} Q ${fixedThree(
+                Number(vwCountup)
+              )} ${wrapper_height()} ${fixedThree(
+                Number(secondCounts[secondCountStatus])
+              )} ${fixedThree(Number(vhCountup2))} L ${fixedThree(
+                Number(secondCounts[secondCountStatus])
+              )} ${wrapper_height()} Z`}
+            ></path>
+          </g>
+        </svg>
+      </div>
+    </div>
   );
 };
 

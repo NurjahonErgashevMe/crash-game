@@ -3,4 +3,5 @@
     flex-direction: column;
     justify-content: space-between;
     height: 93vh; /* Или нужная высота */
+    width: 100%;
 }

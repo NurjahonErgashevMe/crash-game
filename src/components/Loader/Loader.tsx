@@ -1,11 +1,13 @@
 import { FC, useState, useEffect } from "react";
 import "./styles.scss";
+import clsx from "clsx";
 
 interface LoaderProps {
-  duration?: number; // duration in seconds
+  duration?: number; // duration in seconds;
+  className?: string;
 }
 
-export const Loader: FC<LoaderProps> = ({ duration = 10 }) => {
+export const Loader: FC<LoaderProps> = ({ duration = 10, className }) => {
   const [isInitialLoading, setIsInitialLoading] = useState(true);
 
   useEffect(() => {
@@ -17,7 +19,7 @@ export const Loader: FC<LoaderProps> = ({ duration = 10 }) => {
   }, []);
 
   return (
-    <div className="loader-wrapper">
+    <div className={clsx("loader-wrapper", className)}>
       {isInitialLoading ? (
         <>
           <svg

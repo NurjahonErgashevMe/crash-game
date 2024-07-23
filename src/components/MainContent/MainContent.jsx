@@ -5,7 +5,7 @@ import GameBlock from "../GameBlock/GameBlock";
 const MainContent = () => {
   return (
     <div className={style.container}>
-      <HistoryBlock />
+      {/* <HistoryBlock /> */}
       <GameBlock />
     </div>
   );
