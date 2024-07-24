@@ -83,18 +83,18 @@ const MainGameBlock: FC = () => {
     ...countsResponsiveOptions({
       small: {
         duration: 3,
-        start: wrapper_height(1),
+        start: wrapper_height(0.9),
         end: wrapper_height(0.1),
       },
       medium: {
         duration: 3,
-        start: wrapper_height(1),
+        start: wrapper_height(1 - 0.15),
         end: wrapper_height(0.19),
       },
       big: {
         duration: 3,
-        start: wrapper_height(1.1),
-        end: wrapper_height(0.3),
+        start: wrapper_height(1.15),
+        end: wrapper_height(0.25),
       },
     }),
   });
@@ -138,7 +138,7 @@ const MainGameBlock: FC = () => {
       },
       medium: {
         duration: 2.8,
-        start: wrapper_height(1.15),
+        start: wrapper_height(1),
         end: wrapper_height(0.35),
       },
       big: {
@@ -192,8 +192,6 @@ const MainGameBlock: FC = () => {
       });
     }
   }, [windowDimensions]);
-
-  console.log(start);
 
   return (
     <div className={styles.jetMainAnimation}>

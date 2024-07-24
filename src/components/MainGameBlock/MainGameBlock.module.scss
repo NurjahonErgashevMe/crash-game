@@ -4,7 +4,7 @@
   overflow: hidden;
 
   @media (max-width: 768px) {
-    width: 60%;
+    height: 60%;
   }
 
   .jetMainAnimationContent {
@@ -26,7 +26,7 @@
   background: #151028;
 
   &.scheduleActive {
-    z-index: 100;
+    z-index: 50;
   }
 
   .scheduleBg1,
@@ -99,6 +99,7 @@
   z-index: 10;
   display: flex;
   background-color: #151028;
+  z-index: 100;
 
   &.hide {
     display: none;
