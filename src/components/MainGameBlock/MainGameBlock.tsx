@@ -196,62 +196,80 @@ const MainGameBlock: FC = () => {
   console.log(start);
 
   return (
-    <div className={styles.wrapper}>
-      <div
-        className={clsx(styles.loading, {
-          [styles.hide]: start,
-        })}
-      >
-        <Loader duration={5} onEnded={handleStart} />
-      </div>
-      <div className={styles.luckyJet} ref={animWrapRef}>
+    <div className={styles.jetMainAnimation}>
+      <div className={styles.jetMainAnimationContent}>
+        {/* <div className={styles.jetMainAnimationBg} /> */}
         <div
-          className={styles.luckyJet__pilot}
-          style={{
-            transform: `translate3d(${boyCounts[secondCountStatus]}px, ${vhCountupBoy}px, 0px)`,
-          }}
+          className={clsx(styles.jetMainSchedule, styles.scheduleActive, {
+            [styles.scheduleStart]: start,
+          })}
         >
-          <div className={styles.luckyJet__pilotImg}>
-            <img src="fire.svg" alt="fire" className={styles.fire} />
-            <img src="boy.gif" alt="boy" className={styles.boy} />
+          <div
+            className={clsx(styles.loading, {
+              [styles.hide]: start,
+            })}
+          >
+            <Loader duration={5} onEnded={handleStart} />
+          </div>
+
+          <div className={clsx(styles.scheduleBg, styles.scheduleBg1)} />
+          <div className={clsx(styles.scheduleBg, styles.scheduleBg2)} />
+          <div className={clsx(styles.scheduleBg, styles.scheduleBg3)} />
+          <div className={clsx(styles.scheduleBg, styles.scheduleBg4)} />
+          <div className={styles.luckyJet} ref={animWrapRef}>
+            <div
+              className={styles.luckyJet__pilot}
+              style={{
+                transform: `translate3d(${boyCounts[secondCountStatus]}px, ${vhCountupBoy}px, 0px)`,
+              }}
+            >
+              <div className={styles.luckyJet__pilotImg}>
+                <img src="fire.svg" alt="fire" className={styles.fire} />
+                <img src="boy.gif" alt="boy" className={styles.boy} />
+              </div>
+            </div>
+            <svg className={styles.luckyJet__svg}>
+              <defs>
+                <linearGradient id="grad" x1="0" x2="1" y1="0" y2="1">
+                  <stop stopColor="#9d7aff" stopOpacity=".33"></stop>
+                  <stop
+                    offset=".987"
+                    stopColor="#9d7aff"
+                    stopOpacity="0"
+                  ></stop>
+                </linearGradient>
+                <linearGradient id="grad_stroke" x1="0" x2="1" y1="0" y2="1">
+                  <stop stopColor="#9D7AFF"></stop>
+                  <stop offset=".787" stopColor="#622BFC"></stop>
+                  <stop offset="1" stopColor="#5c24fc" stopOpacity="0"></stop>
+                </linearGradient>
+              </defs>
+              <g>
+                <path
+                  className={styles.luckyJet__svgStroke}
+                  fill="transparent"
+                  stroke="url(#grad_stroke)"
+                  d={`M 0 ${wrapper_height()} Q ${fixedThree(
+                    Number(vwCountup)
+                  )} ${wrapper_height()} ${fixedThree(
+                    Number(secondCounts[secondCountStatus])
+                  )} ${fixedThree(Number(vhCountup2))}`}
+                ></path>
+                <path
+                  className={styles.luckyJet__svgGrad}
+                  fill="url(#grad)"
+                  d={`M 0 ${wrapper_height()} Q ${fixedThree(
+                    Number(vwCountup)
+                  )} ${wrapper_height()} ${fixedThree(
+                    Number(secondCounts[secondCountStatus])
+                  )} ${fixedThree(Number(vhCountup2))} L ${fixedThree(
+                    Number(secondCounts[secondCountStatus])
+                  )} ${wrapper_height()} Z`}
+                ></path>
+              </g>
+            </svg>
           </div>
         </div>
-        <svg className={styles.luckyJet__svg}>
-          <defs>
-            <linearGradient id="grad" x1="0" x2="1" y1="0" y2="1">
-              <stop stopColor="#9d7aff" stopOpacity=".33"></stop>
-              <stop offset=".987" stopColor="#9d7aff" stopOpacity="0"></stop>
-            </linearGradient>
-            <linearGradient id="grad_stroke" x1="0" x2="1" y1="0" y2="1">
-              <stop stopColor="#9D7AFF"></stop>
-              <stop offset=".787" stopColor="#622BFC"></stop>
-              <stop offset="1" stopColor="#5c24fc" stopOpacity="0"></stop>
-            </linearGradient>
-          </defs>
-          <g>
-            <path
-              className={styles.luckyJet__svgStroke}
-              fill="transparent"
-              stroke="url(#grad_stroke)"
-              d={`M 0 ${wrapper_height()} Q ${fixedThree(
-                Number(vwCountup)
-              )} ${wrapper_height()} ${fixedThree(
-                Number(secondCounts[secondCountStatus])
-              )} ${fixedThree(Number(vhCountup2))}`}
-            ></path>
-            <path
-              className={styles.luckyJet__svgGrad}
-              fill="url(#grad)"
-              d={`M 0 ${wrapper_height()} Q ${fixedThree(
-                Number(vwCountup)
-              )} ${wrapper_height()} ${fixedThree(
-                Number(secondCounts[secondCountStatus])
-              )} ${fixedThree(Number(vhCountup2))} L ${fixedThree(
-                Number(secondCounts[secondCountStatus])
-              )} ${wrapper_height()} Z`}
-            ></path>
-          </g>
-        </svg>
       </div>
     </div>
   );

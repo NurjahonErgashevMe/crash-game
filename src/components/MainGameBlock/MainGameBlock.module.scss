@@ -1,4 +1,4 @@
-.wrapper {
+.jetMainAnimation {
   height: 80%;
   position: relative;
   overflow: hidden;
@@ -6,6 +6,87 @@
   @media (max-width: 768px) {
     width: 60%;
   }
+
+  .jetMainAnimationContent {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.jetMainSchedule {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+
+  background: #151028;
+
+  &.scheduleActive {
+    z-index: 100;
+  }
+
+  .scheduleBg1,
+  .scheduleBg2,
+  .scheduleBg3,
+  .scheduleBg4 {
+    animation-play-state: paused;
+  }
+
+  &.scheduleStart {
+
+    .scheduleBg1,
+    .scheduleBg2,
+    .scheduleBg3,
+    .scheduleBg4 {
+      animation-play-state: running;
+    }
+  }
+}
+
+.scheduleBg1 {
+  position: absolute;
+  width: 100%;
+  height: 50%;
+  background: url(/public/schedules/bg1.png) 0% 0% / contain repeat-x;
+  background-repeat: repeat-x;
+  animation: 320s scroll infinite linear;
+}
+
+.scheduleBg2 {
+  position: absolute;
+  width: 100%;
+  height: 157px;
+  bottom: 0px;
+  opacity: 1;
+  background: url(/public/schedules/bg2.svg) 0% 0% / contain repeat-x;
+  background-repeat: repeat-x;
+  animation: 100s scroll infinite linear;
+}
+
+.scheduleBg3 {
+  position: absolute;
+  bottom: 0px;
+  left: 20px;
+  width: 100%;
+  height: 20px;
+  background: url(/public/schedules/bg3.svg);
+  border-top: 1px solid rgb(38, 28, 74);
+  animation: 50s scroll infinite linear;
+}
+
+.scheduleBg4 {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 20px;
+  height: 100%;
+  background: url(/public/schedules/bg4.svg);
+  border-right: 1px solid rgb(38, 28, 74);
+  animation: 70s scrolltop infinite linear;
 }
 
 .loading {
@@ -17,6 +98,7 @@
   font-size: 50px;
   z-index: 10;
   display: flex;
+  background-color: #151028;
 
   &.hide {
     display: none;
@@ -70,5 +152,17 @@
       width: 100%;
       z-index: 10;
     }
+  }
+}
+
+@keyframes scrolltop {
+  100% {
+    background-position: 0px 3000px;
+  }
+}
+
+@keyframes scroll {
+  100% {
+    background-position: -3000px 0px;
   }
 }
