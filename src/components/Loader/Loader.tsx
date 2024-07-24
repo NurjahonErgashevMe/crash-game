@@ -5,15 +5,28 @@ import clsx from "clsx";
 interface LoaderProps {
   duration?: number; // duration in seconds;
   className?: string;
+  onEnded?: () => void;
 }
 
-export const Loader: FC<LoaderProps> = ({ duration = 10, className }) => {
+export const Loader: FC<LoaderProps> = ({
+  duration = 10,
+  className,
+  onEnded,
+}) => {
   const [isInitialLoading, setIsInitialLoading] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsInitialLoading(false);
     }, (duration - 2) * 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      onEnded?.();
+    }, duration * 1000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -120,7 +133,7 @@ export const Loader: FC<LoaderProps> = ({ duration = 10, className }) => {
             </g>
           </svg>
           <span className="game__waiting" data-lang="waiting">
-            Ожидание ставки
+            waiting for a bid
           </span>
           <div
             className="straight-line-loader"
@@ -134,7 +147,7 @@ export const Loader: FC<LoaderProps> = ({ duration = 10, className }) => {
           </div>
         </>
       ) : (
-        <span className="loading-text">Ожидание</span>
+        <span className="loading-text">Wait</span>
       )}
     </div>
   );

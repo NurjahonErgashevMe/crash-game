@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo, useRef, useState } from "react";
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import "./MainGameBlock.scss";
 import { motion } from "framer-motion";
 import { useCountUp } from "use-count-up";
@@ -204,7 +204,7 @@ const MainGameBlock: FC = () => {
     [vwCountupBoyRight, vwCountupBoyLeft, vwCountupBoy]
   );
 
-  useEffect(() => {
+  const handleStart = useCallback(() => {
     if (animWrapRef.current) {
       setStart(true); //запускаем процесс
       setWrapperDimensions({
@@ -221,7 +221,7 @@ const MainGameBlock: FC = () => {
       wCountupReset2();
       hCountupReset2();
     }
-  }, [animWrapRef.current]);
+  }, []);
 
   useEffect(() => {
     if (animWrapRef.current) {
@@ -232,20 +232,18 @@ const MainGameBlock: FC = () => {
     }
   }, [windowDimensions]);
 
+  console.log(start);
+
   return (
     <div className="wrapper">
-      {/* <Loader
-        duration={5}
-        className={clsx("loading", {
-          show: !start,
-        })}
-      /> */}
       <div
-        className={clsx("lucky-jet", {
-          _animating: start,
+        className={clsx("loading", {
+          hide: start,
         })}
-        ref={animWrapRef}
       >
+        <Loader duration={5} onEnded={handleStart} />
+      </div>
+      <div className={"lucky-jet"} ref={animWrapRef}>
         <div
           className={"lucky-jet__pilot"}
           style={{
@@ -254,7 +252,7 @@ const MainGameBlock: FC = () => {
         >
           <div className="schedule-animate-img lucky-jet__pilot-img">
             <img src="fire.svg" alt="fire" className="fire" />
-            <img src="boy.webp" alt="boy" className="boy" />
+            <img src="boy.gif" alt="boy" className="boy" />
           </div>
         </div>
         <svg className="lucky-jet__svg">

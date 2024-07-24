@@ -1,21 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap");
-
-@font-face {
-  font-display: swap;
-  font-family: "Rocketfont";
-  font-style: normal;
-  font-weight: 300;
-  src: url("/public/fonts/Rocketfont-latin-ext.1054180f7.woff2") format("woff2");
-}
-
-@font-face {
-  font-display: swap;
-  font-family: "Rocketfont";
-  font-style: normal;
-  font-weight: 300;
-  src: url("/public/fonts/Rocketfont-latin.6b82a4379.woff2") format("woff2");
-}
-
 .main {
   display: flex;
 }
@@ -148,13 +130,17 @@
 
 .button::after {
   content: "";
-    position: absolute;
-    width: 91px;
-    height: 2.8px;
-    bottom: 15px;
-    left: calc(50% - 57.5px);
-    border-radius: 12px 12px 0px 0px;
-    background: linear-gradient(263.87deg, rgb(148, 78, 245) 0%, rgb(92, 36, 252) 100%);
+  position: absolute;
+  width: 91px;
+  height: 2.8px;
+  bottom: 15px;
+  left: calc(50% - 57.5px);
+  border-radius: 12px 12px 0px 0px;
+  background: linear-gradient(
+    263.87deg,
+    rgb(148, 78, 245) 0%,
+    rgb(92, 36, 252) 100%
+  );
 }
 
 .buttonTWO {
@@ -175,7 +161,11 @@
   bottom: 15px;
   left: calc(50% - -572.2px);
   border-radius: 12px 12px 0px 0px;
-  background: linear-gradient(263.87deg, rgb(148, 78, 245) 0%, rgb(92, 36, 252) 100%);
+  background: linear-gradient(
+    263.87deg,
+    rgb(148, 78, 245) 0%,
+    rgb(92, 36, 252) 100%
+  );
 }
 
 .stavkabtn {
@@ -231,4 +221,3 @@
 .numback:last-child {
   margin-right: 5px;
 }
-
