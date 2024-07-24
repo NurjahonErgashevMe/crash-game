@@ -1,4 +1,4 @@
-import style from "./MainContent.module.css";
+import style from "./MainContent.module.scss";
 import HistoryBlock from "../HistoryBlock/HistoryBlock";
 import GameBlock from "../GameBlock/GameBlock";
 

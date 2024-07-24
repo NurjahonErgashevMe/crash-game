@@ -1,4 +1,4 @@
-import style from "./ButtonGameBlock.module.css";
+import style from "./ButtonGameBlock.module.scss";
 
 const ButtonGameBlock = () => {
   return (

@@ -1,10 +1,9 @@
 .wrapper {
   height: 80%;
   position: relative;
-
   overflow: hidden;
 
-  @media (max-width:768px) {
+  @media (max-width: 768px) {
     width: 60%;
   }
 }
@@ -24,7 +23,7 @@
   }
 }
 
-.lucky-jet {
+.luckyJet {
   outline: 1px solid;
   height: 100%;
   position: relative;
@@ -41,37 +40,35 @@
     top: 0;
   }
 
-
   &__svg {
     width: 100%;
     height: 100%;
     pointer-events: none;
     position: absolute;
   }
-}
 
-
-.lucky-jet__pilot-img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  transform: rotate(7deg);
-
-  .fire {
+  &__pilotImg {
     position: absolute;
-    width: 50px;
-    margin-top: 85%;
-    margin-left: -46%;
-    z-index: -1;
-    transform: rotate(-135deg);
-  }
-
-  .boy {
-    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    z-index: 10;
+    height: 100%;
+    object-fit: contain;
+    transform: rotate(7deg);
+
+    .fire {
+      position: absolute;
+      width: 50px;
+      margin-top: 85%;
+      margin-left: -46%;
+      z-index: -1;
+      transform: rotate(-135deg);
+    }
+
+    .boy {
+      position: absolute;
+      width: 100%;
+      z-index: 10;
+    }
   }
 }

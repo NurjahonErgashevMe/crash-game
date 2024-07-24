@@ -1,6 +1,5 @@
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import "./MainGameBlock.scss";
-import { motion } from "framer-motion";
+import styles from "./MainGameBlock.module.scss";
 import { useCountUp } from "use-count-up";
 import clsx from "clsx";
 import { Loader } from "../Loader/Loader";
@@ -47,16 +46,7 @@ const MainGameBlock: FC = () => {
         setSecondCountStatus("right");
         wCountupResetRight();
         wCountupBoyResetRight();
-        // hCountupReset2Bottom();
-        // setSecondCountStatus("top");
-        // wCountupResetTop();
-        // hCountupReset2Top();
         break;
-      // case "top":
-      //   setSecondCountStatus("right");
-      //   wCountupResetRight();
-      //   hCountupReset2Bottom();
-      //   break;
       default: {
         setSecondCountStatus("flying");
       }
@@ -107,20 +97,6 @@ const MainGameBlock: FC = () => {
         end: wrapper_height(0.3),
       },
     }),
-    // small size
-    // duration: 3,
-    // start: wrapper_height(1),
-    // end: wrapper_height(0.1),
-
-    // middle size
-    // duration: 3,
-    // start: wrapper_height(1),
-    // end: wrapper_height(0.19),
-
-    // big size
-    // duration: 3,
-    // start: wrapper_height(1.1),
-    // end: wrapper_height(0.3),
   });
 
   // for line
@@ -171,21 +147,6 @@ const MainGameBlock: FC = () => {
         end: wrapper_height(0.35),
       },
     }),
-
-    // small size
-    // duration: 3,
-    // start: wrapper_height(1.1),
-    // end: wrapper_height(0.3),
-
-    // middle size
-    // duration: 2.8,
-    // start: wrapper_height(1.15),
-    // end: wrapper_height(0.32),
-
-    // big size
-    // duration: 3,
-    // start: wrapper_height(1.2),
-    // end: wrapper_height(0.35),
   });
   const secondCounts = useMemo<Record<"flying" | "left" | "right", number>>(
     () => ({
@@ -206,7 +167,7 @@ const MainGameBlock: FC = () => {
 
   const handleStart = useCallback(() => {
     if (animWrapRef.current) {
-      setStart(true); //запускаем процесс
+      setStart(true); // Start the animation
       setWrapperDimensions({
         width: animWrapRef.current?.clientWidth,
         height: animWrapRef.current?.clientHeight,
@@ -235,41 +196,41 @@ const MainGameBlock: FC = () => {
   console.log(start);
 
   return (
-    <div className="wrapper">
+    <div className={styles.wrapper}>
       <div
-        className={clsx("loading", {
-          hide: start,
+        className={clsx(styles.loading, {
+          [styles.hide]: start,
         })}
       >
         <Loader duration={5} onEnded={handleStart} />
       </div>
-      <div className={"lucky-jet"} ref={animWrapRef}>
+      <div className={styles.luckyJet} ref={animWrapRef}>
         <div
-          className={"lucky-jet__pilot"}
+          className={styles.luckyJet__pilot}
           style={{
             transform: `translate3d(${boyCounts[secondCountStatus]}px, ${vhCountupBoy}px, 0px)`,
           }}
         >
-          <div className="schedule-animate-img lucky-jet__pilot-img">
-            <img src="fire.svg" alt="fire" className="fire" />
-            <img src="boy.gif" alt="boy" className="boy" />
+          <div className={styles.luckyJet__pilotImg}>
+            <img src="fire.svg" alt="fire" className={styles.fire} />
+            <img src="boy.gif" alt="boy" className={styles.boy} />
           </div>
         </div>
-        <svg className="lucky-jet__svg">
+        <svg className={styles.luckyJet__svg}>
           <defs>
             <linearGradient id="grad" x1="0" x2="1" y1="0" y2="1">
-              <stop stop-color="#9d7aff" stop-opacity=".33"></stop>
-              <stop offset=".987" stop-color="#9d7aff" stop-opacity="0"></stop>
+              <stop stopColor="#9d7aff" stopOpacity=".33"></stop>
+              <stop offset=".987" stopColor="#9d7aff" stopOpacity="0"></stop>
             </linearGradient>
             <linearGradient id="grad_stroke" x1="0" x2="1" y1="0" y2="1">
-              <stop stop-color="#9D7AFF"></stop>
-              <stop offset=".787" stop-color="#622BFC"></stop>
-              <stop offset="1" stop-color="#5c24fc" stop-opacity="0"></stop>
+              <stop stopColor="#9D7AFF"></stop>
+              <stop offset=".787" stopColor="#622BFC"></stop>
+              <stop offset="1" stopColor="#5c24fc" stopOpacity="0"></stop>
             </linearGradient>
           </defs>
           <g>
             <path
-              className="lucky-jet__svg-stroke"
+              className={styles.luckyJet__svgStroke}
               fill="transparent"
               stroke="url(#grad_stroke)"
               d={`M 0 ${wrapper_height()} Q ${fixedThree(
@@ -279,7 +240,7 @@ const MainGameBlock: FC = () => {
               )} ${fixedThree(Number(vhCountup2))}`}
             ></path>
             <path
-              className="lucky-jet__svg-grad"
+              className={styles.luckyJet__svgGrad}
               fill="url(#grad)"
               d={`M 0 ${wrapper_height()} Q ${fixedThree(
                 Number(vwCountup)

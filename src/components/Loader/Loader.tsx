@@ -1,5 +1,5 @@
 import { FC, useState, useEffect } from "react";
-import "./styles.scss";
+import styles from "./Loader.module.scss";
 import clsx from "clsx";
 
 interface LoaderProps {
@@ -32,16 +32,16 @@ export const Loader: FC<LoaderProps> = ({
   }, []);
 
   return (
-    <div className={clsx("loader-wrapper", className)}>
+    <div className={clsx(styles.loaderWrapper, className)}>
       {isInitialLoading ? (
         <>
           <svg
-            className="loader game__loader"
+            className={styles.gameLoader}
             viewBox="0 0 82 82"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <g className="loader__big-lines">
+            <g className={styles.loaderBigLines}>
               <path
                 d="M79.7626 46.0635C80.5991 46.1681 81.1954 46.932 81.0591 47.7639C79.5536 56.9579 74.9059 65.3649 67.884 71.5352C60.8621 77.7056 51.9273 81.2339 42.6161 81.5448C41.7735 81.573 41.0927 80.8835 41.0965 80.0405C41.1002 79.1975 41.7871 78.5203 42.6296 78.4896C51.1941 78.177 59.4076 74.9196 65.8688 69.2419C72.33 63.5643 76.6164 55.8378 78.0275 47.3845C78.1663 46.5529 78.9261 45.9588 79.7626 46.0635Z"
                 fill="#944EF5"
@@ -59,7 +59,7 @@ export const Loader: FC<LoaderProps> = ({
                 fill="#944EF5"
               ></path>
             </g>
-            <g className="loader__little-lines">
+            <g className={styles.loaderLittleLines}>
               <path
                 d="M16.7748 20.7889C16.1313 20.2514 16.0428 19.2914 16.609 18.673C21.7649 13.0403 28.7071 9.33033 36.2882 8.1881C43.8692 7.04587 51.5963 8.54567 58.183 12.409C58.9063 12.8332 59.1046 13.7767 58.648 14.4799C58.1914 15.1832 57.2529 15.3795 56.5278 14.9586C50.5653 11.4977 43.5874 10.1589 36.7405 11.1906C29.8937 12.2222 23.62 15.5575 18.942 20.6216C18.3731 21.2375 17.4184 21.3264 16.7748 20.7889Z"
                 fill="#944EF5"
@@ -77,16 +77,16 @@ export const Loader: FC<LoaderProps> = ({
                 fill="#944EF5"
               ></path>
             </g>
-            <g className="loader__jetpack">
+            <g className={styles.loaderJetpack}>
               <path
                 d="M29.5862 29.3317C29.5862 26.1354 32.1773 23.5444 35.3735 23.5444C38.5697 23.5444 41.1607 26.1354 41.1607 29.3317V37.3006V44.7182C41.1607 47.254 39.105 49.3098 36.5692 49.3098H34.1778C31.642 49.3098 29.5862 47.254 29.5862 44.7182V37.3006V29.3317Z"
                 stroke="#944EF5"
-                stroke-width="2.86975"
+                strokeWidth="2.86975"
               ></path>
               <path
                 d="M41.6653 29.3317C41.6653 26.1354 44.2564 23.5444 47.4526 23.5444C50.6488 23.5444 53.2398 26.1354 53.2398 29.3317V37.3006V44.7182C53.2398 47.254 51.1841 49.3098 48.6483 49.3098H46.2569C43.7211 49.3098 41.6653 47.254 41.6653 44.7182V37.3006V29.3317Z"
                 stroke="#944EF5"
-                stroke-width="2.86975"
+                strokeWidth="2.86975"
               ></path>
               <path
                 d="M54.6746 45.9299H60.9889C62.1667 45.9299 63.1215 44.9751 63.1215 43.7973V40.5387C63.1215 39.8486 62.7876 39.2011 62.2253 38.8011L54.6746 33.4284V45.9299Z"
@@ -121,7 +121,7 @@ export const Loader: FC<LoaderProps> = ({
                 fill="#944EF5"
               ></path>
             </g>
-            <g className="loader__fire">
+            <g className={styles.loaderFire}>
               <path
                 d="M35.8228 62.6074C35.6156 62.9663 35.0974 62.9663 34.8902 62.6074L32.7474 58.8959C31.5878 56.8874 33.0373 54.3768 35.3565 54.3768C37.6757 54.3768 39.1252 56.8874 37.9656 58.8959L35.8228 62.6074Z"
                 fill="#944EF5"
@@ -132,22 +132,22 @@ export const Loader: FC<LoaderProps> = ({
               ></path>
             </g>
           </svg>
-          <span className="game__waiting" data-lang="waiting">
+          <span className={styles.gameWaiting} data-lang="waiting">
             waiting for a bid
           </span>
           <div
-            className="straight-line-loader"
+            className={styles.straightLineLoader}
             style={
               {
                 "--animation-duration": `${duration - 2}s`,
               } as React.CSSProperties
             }
           >
-            <div className="line"></div>
+            <div className={styles.line}></div>
           </div>
         </>
       ) : (
-        <span className="loading-text">Wait</span>
+        <span className={styles.loadingText}>Wait</span>
       )}
     </div>
   );
