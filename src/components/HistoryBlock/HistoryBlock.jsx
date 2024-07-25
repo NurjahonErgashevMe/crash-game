@@ -1,4 +1,4 @@
-import style from "./HistoryBlock.module.css";
+import style from "./HistoryBlock.module.scss";
 
 const HistoryBlock = () => {
   return (

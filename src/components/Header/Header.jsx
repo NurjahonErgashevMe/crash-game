@@ -2,13 +2,13 @@ import style from "./Header.module.scss";
 
 const Header = () => {
   return (
-    <>
-      <div className={style.parent}>
-        <div className={style.left}>
+    <header className={style.header}>
+      <div className={style.container}>
+        <div className={style.logo}>
           <img src="/public/lucky.svg" />
         </div>
 
-        <div className={style.right}>
+        <div className={style.events}>
           <div className={style.one}>
             <div className={style.volume}>
               <img src="/public/volume.svg" />
@@ -21,7 +21,7 @@ const Header = () => {
 
           <div className={style.two}>
             <div className={style.what}>
-              <img style={{marginLeft: '-1px'}} src="/public/what.svg" />{" "}
+              <img style={{ marginLeft: "-1px" }} src="/public/what.svg" />{" "}
               <p className={style.textW}>Как играть?</p>
             </div>
             <div className={style.separator}></div> {/* Добавляем линию */}
@@ -42,9 +42,7 @@ const Header = () => {
           </div>
         </div>
       </div>
-
-      <span className={style.line}></span>
-    </>
+    </header>
   );
 };
 

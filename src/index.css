@@ -24,3 +24,7 @@ html {
   -webkit-text-size-adjust: none;
   text-size-adjust: none;
 }
+
+body::-webkit-scrollbar {
+  display: none;
+}
