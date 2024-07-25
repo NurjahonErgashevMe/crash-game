@@ -1,0 +1,68 @@
+import { FC } from "react";
+import Tabs, { Tab } from "../Tabs/Tabs";
+
+import style from "./HistoryBlock.module.scss";
+import { betsHistory, cashOutHistory, ICashOut } from "@/mocks/betHistory";
+import clsx from "clsx";
+import { getCoefficentColor } from "@/helpers/getCoefficentColor";
+
+const tabs: Tab[] = [
+  { name: "Все" },
+  { name: "Мои", disabled: true },
+  { name: "Топ", disabled: true },
+];
+
+const isBetDone = (user_id: string): ICashOut | undefined =>
+  cashOutHistory.find((cash) => cash.thanus_user_id === user_id);
+
+const HistoryBlock: FC = () => {
+  return (
+    <div className={style.history}>
+      <div className={style.container}>
+        <div className={style.block}>
+          <Tabs tabs={tabs} defaultTab="Все" />
+        </div>
+        {betsHistory.map((bet) => {
+          const isDone = isBetDone(bet.thanus_user_id);
+          return (
+            <div
+              className={clsx(style.bet, {
+                [style.betDone]: !!isDone,
+              })}
+              key={bet.event_id}
+            >
+              <b className={style.betSize}>{bet.bet_size.toFixed(2)}₽</b>
+              <div
+                className={style.coefficient}
+                style={{
+                  backgroundColor: isDone
+                    ? getCoefficentColor(isDone.coefficient)
+                    : "transparent",
+                }}
+              >
+                {isDone ? `${isDone.coefficient}x` : "-"}
+              </div>
+              <div
+                className={clsx(style.prize, {
+                  [style.done]: isDone,
+                })}
+              >
+                {isDone ? `${isDone.prize_size.toFixed(2)}₽` : "-"}
+              </div>
+              {/* <div className={style.sb}>
+                <div className={style.send}>
+                  <img src="/public/send.svg" alt="" />
+                </div>
+                <div className={style.verify}>
+                  <img src="/public/verify.svg" alt="" />
+                </div>
+              </div> */}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+export default HistoryBlock;

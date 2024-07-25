@@ -5,23 +5,11 @@ import styles from "./HistoryGameBlock.module.scss";
 
 import WatchIcon from "public/watch.svg";
 import XIcon from "public/x.svg";
+import { getCoefficentColor } from "@/helpers/getCoefficentColor";
 
 type Props = {
   coefficients: number[];
 };
-enum Colors {
-  low = "rgb(62, 91, 194)",
-  medium = "rgb(117, 62, 194)",
-  large = "rgb(222, 139, 3)",
-}
-
-const getCoefficentColor = (coefficient: number) =>
-  coefficient <= 2
-    ? Colors["low"]
-    : coefficient >= 10
-    ? Colors["large"]
-    : Colors["medium"];
-
 const HistoryGameBlock: FC<Props> = ({ coefficients }) => {
   const [viewHistory, setViewHistory] = useState<boolean>(false);
 

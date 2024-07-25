@@ -1,0 +1,66 @@
+.container {
+    width: 100%;
+    background: rgb(17, 13, 33);
+    border-radius: 10px;
+    padding: 2px;
+    height: 36px;
+    opacity: 1;
+}
+
+
+.wrapper {
+    width: 100%;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    position: relative;
+}
+
+.button {
+    display: grid;
+    -webkit-box-pack: center;
+    place-content: center;
+    height: inherit;
+    font-family: Manrope;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 11px;
+    letter-spacing: 0.23px;
+    text-align: center;
+    color: white;
+    padding: 11px 0px;
+    border: none;
+    background: none;
+    outline: none;
+    position: relative;
+    z-index: 2;
+    cursor: pointer;
+    transition: color 0.32s ease 0s;
+
+
+    &.selected {
+        color: #ffffff;
+    }
+
+    &.unselected {
+        color: #cbd5e1;
+    }
+
+    &.disabled {
+        cursor: not-allowed;
+    }
+}
+
+.pillTab {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-color: rgb(28, 21, 55);
+    border-radius: 10px;
+}
+
+.zIndex {
+    position: relative;
+    z-index: 10;
+}
