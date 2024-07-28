@@ -1,6 +1,7 @@
+import { FC } from "react";
 import style from "./Header.module.scss";
 
-const Header = () => {
+const Header: FC = () => {
   return (
     <header className={style.header}>
       <div className={style.container}>
