@@ -6,6 +6,8 @@ import VolumeIcon from "public/volume.svg";
 import MusicIcon from "public/music.svg";
 import CollectionIcon from "public/collection.svg";
 import ChatIcon from "public/chat.svg";
+import MoneyIcon from "public/money.svg";
+import WhatIcon from "public/what.svg";
 
 const Header: FC = () => {
   return (
@@ -28,12 +30,13 @@ const Header: FC = () => {
 
           <div className={style.two}>
             <div className={style.what}>
-              <img style={{ marginLeft: "-1px" }} src="/public/what.svg" />{" "}
+              <WhatIcon style={{ marginLeft: "-1px" }} />
               <p className={style.textW}>Как играть?</p>
             </div>
             <div className={style.separator}></div> {/* Добавляем линию */}
             <div className={style.money}>
-              <img src="/public/money.svg" />{" "}
+              {/* <img src="/public/money.svg" />{" "} */}
+              <MoneyIcon />
               <p className={style.text}>125 720.46 ₽</p>
             </div>
             <div className={style.separator}></div> {/* Добавляем линию */}
