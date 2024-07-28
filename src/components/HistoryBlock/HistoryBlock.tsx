@@ -7,8 +7,8 @@ import clsx from "clsx";
 import { getCoefficentColor } from "@/helpers/getCoefficentColor";
 
 const tabs: Tab[] = [
-  { name: "Все" },
-  { name: "Мои", disabled: true },
+  { name: "Все", disabled: true },
+  { name: "Мои" },
   { name: "Топ", disabled: true },
 ];
 
@@ -20,7 +20,7 @@ const HistoryBlock: FC = () => {
     <div className={style.history}>
       <div className={style.container}>
         <div className={style.block}>
-          <Tabs tabs={tabs} defaultTab="Все" />
+          <Tabs tabs={tabs} defaultTab="Мои" />
         </div>
         {betsHistory.map((bet) => {
           const isDone = isBetDone(bet.thanus_user_id);
