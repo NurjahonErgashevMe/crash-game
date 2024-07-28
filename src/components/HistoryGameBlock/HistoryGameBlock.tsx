@@ -11,19 +11,19 @@ type Props = {
   coefficients: number[];
 };
 const HistoryGameBlock: FC<Props> = ({ coefficients }) => {
-  const [viewHistory, setViewHistory] = useState<boolean>(false);
+  // const [viewHistory, setViewHistory] = useState<boolean>(false);
 
-  const toggleViewHistory = () => {
-    setViewHistory((prev) => !prev);
-  };
+  // const toggleViewHistory = () => {
+  //   setViewHistory((prev) => !prev);
+  // };
   return (
     <section
       className={clsx(styles.section, {
-        [styles.active]: viewHistory,
+        [styles.active]: false,
       })}
     >
       <div className={styles.historyBg} />
-      <div className={styles.historyHeader}>
+      {/* <div className={styles.historyHeader}>
         <div className={styles.historyHeaderContent}>
           <div className={styles.historyHeaderLeft}>
             <i className="fa-solid fa-clock"></i>
@@ -38,7 +38,7 @@ const HistoryGameBlock: FC<Props> = ({ coefficients }) => {
             </button>
           </div>
         </div>
-      </div>
+      </div> */}
       <div id="coefficients" className={styles.historyContent}>
         {coefficients?.map((coefficient, index) => (
           <div
@@ -54,7 +54,7 @@ const HistoryGameBlock: FC<Props> = ({ coefficients }) => {
       </div>
       <button
         className={styles.allCoefToggleButton}
-        onClick={toggleViewHistory}
+        // onClick={toggleViewHistory}
       >
         <WatchIcon width={15} height={15} fill="#DFE5F2" />
       </button>

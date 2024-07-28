@@ -17,43 +17,47 @@ const isBetDone = (user_id: string): ICashOut | undefined =>
 
 const HistoryBlock: FC = () => {
   return (
-    <div className={style.history}>
+    <section className={style.section}>
       <div className={style.container}>
-        <div className={style.block}>
-          <Tabs tabs={tabs} defaultTab="Мои" />
+        <div className={style.tabsWrapper}>
+          <div className={style.tabs}>
+            <Tabs tabs={tabs} defaultTab="Мои" />
+          </div>
         </div>
-        {betsHistory.map((bet) => {
-          const isDone = isBetDone(bet.thanus_user_id);
-          return (
-            <div
-              className={clsx(style.bet, {
-                [style.betDone]: !!isDone,
-              })}
-              key={bet.event_id}
-            >
-              <b className={style.betSize}>{bet.bet_size.toFixed(2)}₽</b>
+        <div className={style.history}>
+          {betsHistory.map((bet) => {
+            const isDone = isBetDone(bet.thanus_user_id);
+            return (
               <div
-                className={style.coefficient}
-                style={{
-                  backgroundColor: isDone
-                    ? getCoefficentColor(isDone.coefficient)
-                    : "transparent",
-                }}
-              >
-                {isDone ? `${isDone.coefficient}x` : "-"}
-              </div>
-              <div
-                className={clsx(style.prize, {
-                  [style.done]: isDone,
+                className={clsx(style.bet, {
+                  [style.betDone]: !!isDone,
                 })}
+                key={bet.event_id}
               >
-                {isDone ? `${isDone.prize_size.toFixed(2)}₽` : "-"}
+                <b className={style.betSize}>{bet.bet_size.toFixed(2)}₽</b>
+                <div
+                  className={style.coefficient}
+                  style={{
+                    backgroundColor: isDone
+                      ? getCoefficentColor(isDone.coefficient)
+                      : "transparent",
+                  }}
+                >
+                  {isDone ? `${isDone.coefficient}x` : "-"}
+                </div>
+                <div
+                  className={clsx(style.prize, {
+                    [style.done]: isDone,
+                  })}
+                >
+                  {isDone ? `${isDone.prize_size.toFixed(2)}₽` : "-"}
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 
