@@ -1,4 +1,4 @@
-// import ButtonGameBlock from "../ButtonGameBlock/ButtonGameBlock";
+import ButtonGameBlock from "../ButtonGameBlock/ButtonGameBlock";
 import { FC } from "react";
 import MainGameBlock from "../MainGameBlock/MainGameBlock";
 import HistoryGameBlock from "../HistoryGameBlock/HistoryGameBlock";
@@ -13,7 +13,7 @@ const GameBlock:FC = () => {
     <div className={style.game}>
       <HistoryGameBlock coefficients={historyCoefficients} />
       <MainGameBlock />
-      {/* <ButtonGameBlock /> */}
+      <ButtonGameBlock />
     </div>
   );
 };

@@ -1,15 +1,17 @@
 .main {
+  width: 100%;
   display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 150px;
 }
 
-.stavka {
-  width: 618.5px;
+.bet {
+  width: 50%;
   height: 124px;
   background: linear-gradient(90deg, rgb(31, 24, 61) 0%, rgb(38, 31, 77) 100%);
   box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 16px;
   border-radius: 14px;
-  margin-left: 11px;
-  margin-bottom: 15px;
 }
 
 .one {
@@ -27,7 +29,7 @@
   justify-content: center;
   background: rgb(27, 21, 54);
   border-radius: 8px;
-  width: 108px;
+  // width: 108px;
   height: 28px;
   margin: 7px;
   margin-left: 292px;
@@ -56,7 +58,7 @@
   justify-content: center;
   background: rgb(27, 21, 54);
   border-radius: 8px;
-  width: 24px;
+  // width: 24px;
   height: 24px;
   margin: 9px;
 }
@@ -136,11 +138,9 @@
   bottom: 15px;
   left: calc(50% - 57.5px);
   border-radius: 12px 12px 0px 0px;
-  background: linear-gradient(
-    263.87deg,
-    rgb(148, 78, 245) 0%,
-    rgb(92, 36, 252) 100%
-  );
+  background: linear-gradient(263.87deg,
+      rgb(148, 78, 245) 0%,
+      rgb(92, 36, 252) 100%);
 }
 
 .buttonTWO {
@@ -161,11 +161,9 @@
   bottom: 15px;
   left: calc(50% - -572.2px);
   border-radius: 12px 12px 0px 0px;
-  background: linear-gradient(
-    263.87deg,
-    rgb(148, 78, 245) 0%,
-    rgb(92, 36, 252) 100%
-  );
+  background: linear-gradient(263.87deg,
+      rgb(148, 78, 245) 0%,
+      rgb(92, 36, 252) 100%);
 }
 
 .stavkabtn {
@@ -178,11 +176,9 @@
   width: 98.2%;
   height: 91%;
   border-radius: 10px;
-  background: linear-gradient(
-    263.87deg,
-    rgb(148, 78, 245) 0%,
-    rgb(92, 36, 252) 100%
-  );
+  background: linear-gradient(263.87deg,
+      rgb(148, 78, 245) 0%,
+      rgb(92, 36, 252) 100%);
   box-shadow: rgba(25, 201, 245, 0.1) 0px 10px 20px,
     rgba(92, 36, 252, 0.1) 0px 10px 20px, rgb(148, 78, 245) 0px -2px 4px inset,
     rgba(148, 78, 245, 0.6) 0px -8px 8px inset;

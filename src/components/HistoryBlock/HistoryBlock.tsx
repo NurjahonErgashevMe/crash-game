@@ -49,14 +49,6 @@ const HistoryBlock: FC = () => {
               >
                 {isDone ? `${isDone.prize_size.toFixed(2)}₽` : "-"}
               </div>
-              {/* <div className={style.sb}>
-                <div className={style.send}>
-                  <img src="/public/send.svg" alt="" />
-                </div>
-                <div className={style.verify}>
-                  <img src="/public/verify.svg" alt="" />
-                </div>
-              </div> */}
             </div>
           );
         })}

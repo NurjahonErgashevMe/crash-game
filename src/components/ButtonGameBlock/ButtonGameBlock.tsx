@@ -1,9 +1,10 @@
+import { FC } from "react";
 import style from "./ButtonGameBlock.module.scss";
 
-const ButtonGameBlock = () => {
+const ButtonGameBlock: FC = () => {
   return (
     <div className={style.main}>
-      <div className={style.stavka}>
+      <div className={style.bet}>
         <div className={style.one}>
           <div className={style.back}>
             <div className={style.only}></div>
@@ -48,13 +49,13 @@ const ButtonGameBlock = () => {
             </div>
 
             <div className={style.button}>
-            <div className={style.stavkabtn}>CTABKA</div>
+              <div className={style.stavkabtn}>CTABKA</div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className={style.stavka}>
+      <div className={style.bet}>
         <div className={style.one}>
           <div className={style.back}>
             <div className={style.only}></div>
@@ -99,7 +100,7 @@ const ButtonGameBlock = () => {
             </div>
 
             <div className={style.buttonTWO}>
-            <div className={style.stavkabtn}>CTABKA</div>
+              <div className={style.stavkabtn}>CTABKA</div>
             </div>
           </div>
         </div>
