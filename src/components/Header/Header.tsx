@@ -1,22 +1,28 @@
 import { FC } from "react";
 import style from "./Header.module.scss";
 
+import Logo from "public/lucky.svg";
+import VolumeIcon from "public/volume.svg";
+import MusicIcon from "public/music.svg";
+import CollectionIcon from "public/collection.svg";
+import ChatIcon from "public/chat.svg";
+
 const Header: FC = () => {
   return (
     <header className={style.header}>
       <div className={style.container}>
         <div className={style.logo}>
-          <img src="/public/lucky.svg" />
+          <Logo />
         </div>
 
         <div className={style.events}>
           <div className={style.one}>
             <div className={style.volume}>
-              <img src="/public/volume.svg" />
+              <VolumeIcon />
             </div>
             <div className={style.separator}></div> {/* Добавляем линию */}
             <div className={style.music}>
-              <img src="/public/music.svg" />
+              <MusicIcon />
             </div>
           </div>
 
@@ -32,13 +38,13 @@ const Header: FC = () => {
             </div>
             <div className={style.separator}></div> {/* Добавляем линию */}
             <div className={style.collection}>
-              <img src="/public/collection.svg" />
+              <CollectionIcon />
             </div>
           </div>
 
           <div className={style.three}>
             <div className={style.chat}>
-              <img src="/public/chat.svg" />
+              <ChatIcon />
             </div>
           </div>
         </div>
