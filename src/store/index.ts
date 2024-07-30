@@ -1,9 +1,12 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
 
 import coefficentHistory from "./reducers/CoefficientHistorySlice";
+import betHistory from "./reducers/BetHistorySlice";
+import balance from "./reducers/BalansSlice";
+import data from "./reducers/data";
 
 export const store = configureStore({
-  reducer: { coefficentHistory },
+  reducer: { coefficentHistory, betHistory, balance, data },
 });
 
 export type AppDispatch = typeof store.dispatch;

@@ -2,11 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface CoefficientHistorySliceState {
-  coefficient: number[];
+  coefficients: number[];
 }
 
 const initialState: CoefficientHistorySliceState = {
-  coefficient: [],
+  coefficients: [],
 };
 
 export const historySlice = createSlice({
@@ -14,7 +14,7 @@ export const historySlice = createSlice({
   initialState,
   reducers: {
     addToHistory: (state, action: PayloadAction<number>) => {
-      state.coefficient.push(action.payload);
+      state.coefficients.push(action.payload);
     },
   },
 });

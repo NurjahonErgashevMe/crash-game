@@ -12,6 +12,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.6",
     "@types/node": "^20.14.12",
+    "axios": "^1.7.2",
     "clsx": "^2.1.1",
     "framer": "^2.4.1",
     "motion": "^10.18.0",

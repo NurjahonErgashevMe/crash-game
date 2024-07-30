@@ -1,16 +1,16 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import clsx from "clsx";
 
 import styles from "./HistoryGameBlock.module.scss";
 
 import WatchIcon from "public/watch.svg";
 import XIcon from "public/x.svg";
-import { getCoefficentColor } from "@/helpers/getCoefficentColor";
 
-type Props = {
-  coefficients: number[];
-};
-const HistoryGameBlock: FC<Props> = ({ coefficients }) => {
+import { getCoefficentColor } from "@/helpers/getCoefficentColor";
+import { useAppSelector } from "@/hooks/redux";
+
+const HistoryGameBlock: FC = () => {
+  const { coefficients } = useAppSelector((state) => state.coefficentHistory);
   // const [viewHistory, setViewHistory] = useState<boolean>(false);
 
   // const toggleViewHistory = () => {

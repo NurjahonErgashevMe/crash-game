@@ -1,21 +1,4 @@
-interface IHistory {
-  coefficient_index: number;
-  slot_index: 0 | 1;
-  event_type: "cash_out" | "bet";
-  event_id: string;
-  thanus_user_id: string;
-}
-
-export interface IBet extends IHistory {
-  currency: string;
-  bet_size: number;
-  bet_size_usd: number;
-}
-
-export interface ICashOut extends IHistory {
-  prize_size: number;
-  coefficient: number;
-}
+import { IBet, ICashOut } from "@/types/types";
 
 export const betsHistory: IBet[] = [
   {

@@ -5,6 +5,8 @@ import clsx from "clsx";
 import { Loader } from "../Loader/Loader";
 import { useWindowDimensions } from "../../hooks/useWindowDimensions";
 import { getResponsiveOptions } from "./helpers/getResponsiveOptions";
+import AnimatedCounter from "@/veiws/CountUp/CountUp";
+import { TResponseState } from "@/types/types";
 
 type TDimensions = {
   width: number;
@@ -14,7 +16,15 @@ type TDimensions = {
 const fixedThree = (number: string | number) =>
   typeof number === "number" ? number.toFixed(3) : Number(number).toFixed(3);
 
-const MainGameBlock: FC = () => {
+type Props = {
+  state: TResponseState;
+  current_coefficients: [number];
+  stop_coefficients: [number | null];
+};
+
+const MainGameBlock: FC<Props> = (props) => {
+  const { current_coefficients = 1, state, stop_coefficients } = props;
+
   const animWrapRef = useRef<HTMLDivElement>(null);
   const [start, setStart] = useState<boolean>(false);
   const [secondCountStatus, setSecondCountStatus] = useState<
@@ -215,6 +225,13 @@ const MainGameBlock: FC = () => {
           <div className={clsx(styles.scheduleBg, styles.scheduleBg3)} />
           <div className={clsx(styles.scheduleBg, styles.scheduleBg4)} />
           <div className={styles.luckyJet} ref={animWrapRef}>
+            <div className={styles.currentCoefficient}>
+              <AnimatedCounter
+                from={0}
+                duration={1000}
+                to={current_coefficients[0]}
+              />
+            </div>
             <div
               className={styles.luckyJet__pilot}
               style={{
