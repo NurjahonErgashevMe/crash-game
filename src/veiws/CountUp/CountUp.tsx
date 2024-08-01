@@ -39,19 +39,17 @@ const AnimatedCounter: FC<AnimatedCounterProps> = ({
       return;
     }
 
-    const controls = animate(from, to, {
+    animate(from, to, {
       duration: duration,
       ease: "easeOut",
       ...animationOptions,
       onUpdate(value) {
-        element.textContent = value.toFixed(0);
+        if (!element) return;
+        if (value) {
+          element.textContent = value.toFixed(0);
+        }
       },
     });
-
-    // Cancel on unmount
-    return () => {
-      controls.stop();
-    };
   }, [ref, inView, from, to]);
 
   return <span ref={ref} />;

@@ -1,111 +1,289 @@
-import { FC } from "react";
-import style from "./ButtonGameBlock.module.scss";
+import { FC, useCallback } from "react";
+import { Card, CardContent, CardHeader } from "../ui/card";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { Minus, Plus } from "lucide-react";
+import { FormProvider, useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useToast } from "../ui/use-toast";
+
+const formSchema = z.object({
+  deposit: z.coerce
+    .number()
+    .min(10)
+    .max(200000, "Максимальное значение 200000")
+    .default(500)
+    .transform((v) => Number(v) || 0),
+  deposit_2: z.coerce
+    .number()
+    .min(10)
+    .max(200000, "Максимальное значение 200000")
+    .default(500)
+    .transform((v) => Number(v) || 0),
+});
+
+type TAutoCashOut = z.infer<typeof formSchema>;
+
+const increase_deposit_buttons = [
+  {
+    id: 1,
+    value: 50,
+  },
+  {
+    id: 2,
+    value: 100,
+  },
+  {
+    id: 3,
+    value: 200,
+  },
+  {
+    id: 4,
+    value: 500,
+  },
+  {
+    id: 5,
+    value: 1000,
+  },
+];
 
 const ButtonGameBlock: FC = () => {
+  const form = useForm<TAutoCashOut>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      deposit: 500,
+      deposit_2: 500,
+    },
+  });
+  const { toast } = useToast();
+
+  const handleOnSubmit = (data: TAutoCashOut) => {
+    toast({
+      title: "You submitted the following values:",
+      description: (
+        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+          <code className="text-white">
+            {JSON.stringify(data?.deposit, null, 2)}
+          </code>
+        </pre>
+      ),
+    });
+  };
+
+  const increase_deposit = useCallback(
+    (value: number) => {
+      form.setValue("deposit", form.getValues().deposit + value);
+    },
+    [form]
+  );
+
+  const handleOnSubmitDeposit2 = (data: TAutoCashOut) => {
+    toast({
+      title: "You submitted the following values:",
+      description: (
+        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+          <code className="text-white">
+            {JSON.stringify(data?.deposit_2, null, 2)}
+          </code>
+        </pre>
+      ),
+    });
+  };
+
   return (
-    <div className={style.main}>
-      <div className={style.bet}>
-        <div className={style.one}>
-          <div className={style.back}>
-            <div className={style.only}></div>
-          </div>
-          <p className={style.text}>Автоставка</p>
-          <div className={style.back}>
-            <div className={style.only}></div>
-          </div>
-          <p className={style.text}>Автовывод</p>
-
-          <div className={style.keff}>
-            <span className={style.x}>х</span> 2.00
-          </div>
-        </div>
-
-        <div className={style.background}>
-          <div className={style.flex}>
-            <div className={style.number}>
-              <div className={style.onein}>
-                <div className={style.img}>
-                  <img
-                    style={{ width: "11px" }}
-                    src="https://lucky-jet.gamedev-atech.cc/assets/media/97de90559589bee034295a9d2e9e626a.svg"
-                    alt=""
-                  />
+    <FormProvider {...form}>
+      <div className="flex items-center justify-between gap-2">
+        <form className="w-[49%]" onSubmit={form.handleSubmit(handleOnSubmit)}>
+          <Card
+            style={{
+              background: `linear-gradient(90deg, rgb(36, 29, 71) 0%, rgb(43, 35, 87) 100%)`,
+            }}
+            className="text-white shadow-md border-2 border-violet-950"
+          >
+            <CardHeader className="w-full">
+              <RadioGroup
+                defaultValue="comfortable"
+                className="flex items-center"
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="default" id="r1" />
+                  <Label htmlFor="r1">Автоставка</Label>
                 </div>
-                <div className={style.input}>500 ₽</div>
-                <div className={style.img}>
-                  <img
-                    style={{ width: "11px" }}
-                    src="https://lucky-jet.gamedev-atech.cc/assets/media/02f73e3c8eee420b71b6f7c6b409b20d.svg"
-                    alt=""
-                  />
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="comfortable" id="r2" />
+                  <Label htmlFor="r2">Автовывод</Label>
                 </div>
+              </RadioGroup>
+            </CardHeader>
+            <CardContent className="w-full">
+              <div className="flex gap-2">
+                <div className="flex w-2/3">
+                  <Button
+                    type="button"
+                    onClick={() =>
+                      form.setValue("deposit", --form.getValues().deposit)
+                    }
+                    className="mx-2 p-2 w-max"
+                  >
+                    <Minus />
+                  </Button>
+                  <div
+                    style={{ border: "2px solid #4934be" }}
+                    className="flex rounded-sm"
+                  >
+                    <Input
+                      type="number"
+                      style={{ fontFamily: "Rocketfont" }}
+                      {...form.register("deposit")}
+                      inputMode="decimal"
+                      className="bg-[#231d47] w-full text-white text-base font-bold outline-none border-none"
+                    />
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      className="mx-2 hover:bg-transparent py-2 text-white hover:text-white"
+                    >
+                      ₽
+                    </Button>
+                  </div>
+                  <Button
+                    type="button"
+                    onClick={() => increase_deposit(1)}
+                    className="mx-2 p-2 w-max"
+                  >
+                    <Plus />
+                  </Button>
+                </div>
+                <Button
+                  type="submit"
+                  style={{
+                    fontFamily: "Rocketfont",
+                    background: `linear-gradient(263.87deg,
+                    rgb(148, 78, 245) 0%,
+                    rgb(92, 36, 252) 100%)`,
+                    textShadow: `#8a8a8a 0px 0px 20px`,
+                  }}
+                  className="w-1/2 py-7"
+                >
+                  CTABKA
+                </Button>
               </div>
-              <div className={style.twoin}>
-                <div className={style.numback}>+50</div>
-                <div className={style.numback}>+100</div>
-                <div className={style.numback}>+200</div>
-                <div className={style.numback}>+500</div>
+              <div className="flex gap-2">
+                {increase_deposit_buttons.map((item) => (
+                  <Button
+                    type="button"
+                    onClick={() => form.setValue("deposit", item.value)}
+                    key={item.id}
+                    className="w-1/3 mt-2"
+                  >
+                    +{item.value}
+                  </Button>
+                ))}
               </div>
-            </div>
+            </CardContent>
+          </Card>
+        </form>
 
-            <div className={style.button}>
-              <div className={style.stavkabtn}>CTABKA</div>
-            </div>
-          </div>
-        </div>
+        <form
+          className="w-[49%]"
+          onSubmit={form.handleSubmit(handleOnSubmitDeposit2)}
+        >
+          <Card
+            style={{
+              background: `linear-gradient(90deg, rgb(36, 29, 71) 0%, rgb(43, 35, 87) 100%)`,
+            }}
+            className="text-white shadow-md border-2 border-violet-950"
+          >
+            <CardHeader className="w-full">
+              <RadioGroup
+                defaultValue="comfortable"
+                className="flex items-center"
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="default" id="r1" />
+                  <Label htmlFor="r1">Автоставка</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="comfortable" id="r2" />
+                  <Label htmlFor="r2">Автовывод</Label>
+                </div>
+              </RadioGroup>
+            </CardHeader>
+            <CardContent className="w-full">
+              <div className="flex gap-2">
+                <div className="flex w-2/3">
+                  <Button
+                    type="button"
+                    onClick={() =>
+                      form.setValue("deposit_2", --form.getValues().deposit_2)
+                    }
+                    className="mx-2 p-2 w-max"
+                  >
+                    <Minus />
+                  </Button>
+                  <div
+                    style={{ border: "2px solid #4934be" }}
+                    className="flex rounded-sm"
+                  >
+                    <Input
+                      type="number"
+                      {...form.register("deposit_2")}
+                      inputMode="decimal"
+                      style={{ fontFamily: "Rocketfont" }}
+                      className="bg-[#231d47] w-full text-white text-base font-bold outline-none border-none"
+                    />
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      className="mx-2 hover:bg-transparent text-white hover:text-white"
+                    >
+                      ₽
+                    </Button>
+                  </div>
+                  <Button
+                    type="button"
+                    onClick={() =>
+                      form.setValue("deposit_2", ++form.getValues().deposit_2)
+                    }
+                    className="mx-2 p-2 w-max"
+                  >
+                    <Plus />
+                  </Button>
+                </div>
+                <Button
+                  type="submit"
+                  style={{
+                    fontFamily: "Rocketfont",
+                    background: `linear-gradient(263.87deg,
+                    rgb(148, 78, 245) 0%,
+                    rgb(92, 36, 252) 100%)`,
+                    textShadow: `#8a8a8a 0px 0px 20px`,
+                  }}
+                  className="w-1/2 py-7"
+                >
+                  CTABKA
+                </Button>
+              </div>
+              <div className="flex gap-2">
+                {increase_deposit_buttons.map((item) => (
+                  <Button
+                    type="button"
+                    onClick={() => form.setValue("deposit_2", item.value)}
+                    key={item.id}
+                    className="w-1/3 mt-2"
+                  >
+                    +{item.value}
+                  </Button>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </form>
       </div>
-
-      <div className={style.bet}>
-        <div className={style.one}>
-          <div className={style.back}>
-            <div className={style.only}></div>
-          </div>
-          <p className={style.text}>Автоставка</p>
-          <div className={style.back}>
-            <div className={style.only}></div>
-          </div>
-          <p className={style.text}>Автовывод</p>
-
-          <div className={style.keff}>
-            <span className={style.x}>х</span> 2.00
-          </div>
-        </div>
-
-        <div className={style.background}>
-          <div className={style.flex}>
-            <div className={style.number}>
-              <div className={style.onein}>
-                <div className={style.img}>
-                  <img
-                    style={{ width: "11px" }}
-                    src="https://lucky-jet.gamedev-atech.cc/assets/media/97de90559589bee034295a9d2e9e626a.svg"
-                    alt=""
-                  />
-                </div>
-                <div className={style.input}>20 ₽</div>
-                <div className={style.img}>
-                  <img
-                    style={{ width: "11px" }}
-                    src="https://lucky-jet.gamedev-atech.cc/assets/media/02f73e3c8eee420b71b6f7c6b409b20d.svg"
-                    alt=""
-                  />
-                </div>
-              </div>
-              <div className={style.twoin}>
-                <div className={style.numback}>+50</div>
-                <div className={style.numback}>+100</div>
-                <div className={style.numback}>+200</div>
-                <div className={style.numback}>+500</div>
-              </div>
-            </div>
-
-            <div className={style.buttonTWO}>
-              <div className={style.stavkabtn}>CTABKA</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    </FormProvider>
   );
 };
 

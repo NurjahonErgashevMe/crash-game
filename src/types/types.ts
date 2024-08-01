@@ -20,6 +20,7 @@ export interface ICashOut extends IHistory {
 export type TAutoCashOut = { min: number; max: number };
 
 export type TResponseState = "betting" | "flying" | "waiting" | "ending";
+
 export interface IResponeStartEvent {
   event_type: string;
   next_state_time: string;
@@ -37,5 +38,23 @@ export interface IResponse {
   stop_coefficients: [number | null];
   bets: IBet[];
   cash_outs: ICashOut[];
-  start_event: {};
+  start_event: {
+    autocashout_settings: TAutoCashOut;
+    currency_settings: {
+      [key: string]: {
+        max_bet_value: number;
+        min_bet_value: number;
+      };
+    };
+    current_time: string;
+    event_id: string;
+    event_type: string;
+    maximum_win: number;
+    middle_coefficient: number;
+    minimum_voucher_cash_out_coefficient: number;
+    next_server_seed: number;
+    next_state_time: string;
+    round_id: string;
+    state: "betting";
+  };
 }

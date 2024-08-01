@@ -17,19 +17,18 @@ const fixedThree = (number: string | number) =>
   typeof number === "number" ? number.toFixed(3) : Number(number).toFixed(3);
 
 type Props = {
-  state: TResponseState;
-  current_coefficients: [number];
-  stop_coefficients: [number | null];
+  state?: TResponseState;
+  current_coefficients?: number;
+  stop_coefficients?: [number | null];
 };
 
-const MainGameBlock: FC<Props> = (props) => {
-  const { current_coefficients = 1, state, stop_coefficients } = props;
-
+const MainGameBlock: FC<Props> = ({ current_coefficients }) => {
   const animWrapRef = useRef<HTMLDivElement>(null);
   const [start, setStart] = useState<boolean>(false);
   const [secondCountStatus, setSecondCountStatus] = useState<
     "flying" | "left" | "right"
   >("flying");
+
   const [wrapperDimensions, setWrapperDimensions] = useState<TDimensions>();
   const windowDimensions = useWindowDimensions();
 
@@ -79,6 +78,7 @@ const MainGameBlock: FC<Props> = (props) => {
       onComplete: () => toggleStatus(),
     }
   );
+
   const { value: vwCountupBoyLeft, reset: wCountupBoyResetLeft } = useCountUp({
     isCounting: start,
     start: wrapper_width(0.85),
@@ -87,6 +87,7 @@ const MainGameBlock: FC<Props> = (props) => {
     easing: "linear",
     onComplete: () => toggleStatus(),
   });
+
   const { value: vhCountupBoy, reset: hCountupBoyReset } = useCountUp({
     isCounting: start,
 
@@ -158,6 +159,7 @@ const MainGameBlock: FC<Props> = (props) => {
       },
     }),
   });
+
   const secondCounts = useMemo<Record<"flying" | "left" | "right", number>>(
     () => ({
       flying: Number(vwCountup2),
@@ -166,6 +168,7 @@ const MainGameBlock: FC<Props> = (props) => {
     }),
     [vwCountup2, vwCountup2Left, vwCountup2Right]
   );
+
   const boyCounts = useMemo<Record<"flying" | "left" | "right", number>>(
     () => ({
       flying: Number(vwCountupBoy),
@@ -203,10 +206,10 @@ const MainGameBlock: FC<Props> = (props) => {
     }
   }, [windowDimensions]);
 
+
   return (
     <div className={styles.jetMainAnimation}>
       <div className={styles.jetMainAnimationContent}>
-        {/* <div className={styles.jetMainAnimationBg} /> */}
         <div
           className={clsx(styles.jetMainSchedule, styles.scheduleActive, {
             [styles.scheduleStart]: start,
@@ -219,18 +222,23 @@ const MainGameBlock: FC<Props> = (props) => {
           >
             <Loader duration={5} onEnded={handleStart} />
           </div>
-
+          <div className="relative">
+            {current_coefficients && (
+              <div
+                style={{ fontFamily: "Rocketfont" }}
+                className="text-violet-400 text-3xl font-medium text-center relative top-[100px]"
+              >
+                X {current_coefficients}
+              </div>
+            )}
+          </div>{" "}
           <div className={clsx(styles.scheduleBg, styles.scheduleBg1)} />
           <div className={clsx(styles.scheduleBg, styles.scheduleBg2)} />
           <div className={clsx(styles.scheduleBg, styles.scheduleBg3)} />
           <div className={clsx(styles.scheduleBg, styles.scheduleBg4)} />
           <div className={styles.luckyJet} ref={animWrapRef}>
             <div className={styles.currentCoefficient}>
-              <AnimatedCounter
-                from={0}
-                duration={1000}
-                to={current_coefficients[0]}
-              />
+              <AnimatedCounter from={0} duration={1000} to={2.2} />
             </div>
             <div
               className={styles.luckyJet__pilot}
