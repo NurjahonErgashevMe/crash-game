@@ -5,8 +5,7 @@ import clsx from "clsx";
 import { Loader } from "../Loader/Loader";
 import { useWindowDimensions } from "../../hooks/useWindowDimensions";
 import { getResponsiveOptions } from "./helpers/getResponsiveOptions";
-import AnimatedCounter from "@/veiws/CountUp/CountUp";
-import { TResponseState } from "@/types/types";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 
 type TDimensions = {
   width: number;
@@ -16,22 +15,22 @@ type TDimensions = {
 const fixedThree = (number: string | number) =>
   typeof number === "number" ? number.toFixed(3) : Number(number).toFixed(3);
 
-type Props = {
-  state: TResponseState;
-  current_coefficients: [number];
-  stop_coefficients: [number | null];
-};
+type Props = {};
 
-const MainGameBlock: FC<Props> = (props) => {
-  const { current_coefficients = 1, state, stop_coefficients } = props;
+const MainGameBlock: FC<Props> = () => {
+  const dispatch = useAppDispatch();
+  const { state } = useAppSelector((state) => state.state);
+  const { currentCoefficient, prevCoefficient } = useAppSelector(
+    (state) => state.coefficentHistory
+  );
 
+  const windowDimensions = useWindowDimensions();
   const animWrapRef = useRef<HTMLDivElement>(null);
   const [start, setStart] = useState<boolean>(false);
   const [secondCountStatus, setSecondCountStatus] = useState<
     "flying" | "left" | "right"
   >("flying");
   const [wrapperDimensions, setWrapperDimensions] = useState<TDimensions>();
-  const windowDimensions = useWindowDimensions();
 
   const wrapper_width = (multiply_by: number = 1): number =>
     wrapperDimensions ? wrapperDimensions.width * multiply_by : 0;
@@ -63,6 +62,17 @@ const MainGameBlock: FC<Props> = (props) => {
     }
   };
 
+  const {
+    value: currentCoefficientValue,
+    reset: currentCoefficientReset,
+  } = useCountUp({
+    isCounting: start,
+    start: prevCoefficient ?? 0,
+    end: currentCoefficient ?? 1,
+    duration: 2.3,
+    decimalPlaces: 2,
+  });
+
   const { value: vwCountupBoy, reset: wCountupBoyReset } = useCountUp({
     isCounting: start,
     end: wrapper_width(0.789),
@@ -73,7 +83,7 @@ const MainGameBlock: FC<Props> = (props) => {
     {
       isCounting: start,
       start: wrapper_width(0.789),
-      end: wrapper_width(0.85),
+      end: wrapper_width(0.82),
       duration: 3,
       easing: "linear",
       onComplete: () => toggleStatus(),
@@ -81,7 +91,7 @@ const MainGameBlock: FC<Props> = (props) => {
   );
   const { value: vwCountupBoyLeft, reset: wCountupBoyResetLeft } = useCountUp({
     isCounting: start,
-    start: wrapper_width(0.85),
+    start: wrapper_width(0.82),
     end: wrapper_width(0.789),
     duration: 3,
     easing: "linear",
@@ -123,7 +133,7 @@ const MainGameBlock: FC<Props> = (props) => {
 
   const { value: vwCountup2Left, reset: wCountupResetLeft } = useCountUp({
     isCounting: start,
-    start: wrapper_width(0.85),
+    start: wrapper_width(0.83),
     end: wrapper_width(0.8),
     duration: 3,
     easing: "linear",
@@ -132,7 +142,7 @@ const MainGameBlock: FC<Props> = (props) => {
   const { value: vwCountup2Right, reset: wCountupResetRight } = useCountUp({
     isCounting: start,
     start: wrapper_width(0.8),
-    end: wrapper_width(0.85),
+    end: wrapper_width(0.83),
     duration: 3,
     easing: "linear",
   });
@@ -176,7 +186,7 @@ const MainGameBlock: FC<Props> = (props) => {
   );
 
   const handleStart = useCallback(() => {
-    if (animWrapRef.current) {
+    if (animWrapRef.current && state !== "ending") {
       setStart(true); // Start the animation
       setWrapperDimensions({
         width: animWrapRef.current?.clientWidth,
@@ -191,8 +201,14 @@ const MainGameBlock: FC<Props> = (props) => {
       wCountupReset();
       wCountupReset2();
       hCountupReset2();
+
+      currentCoefficientReset();
     }
-  }, []);
+  }, [state]);
+
+  useEffect(() => {
+    currentCoefficientReset();
+  }, [currentCoefficient]);
 
   useEffect(() => {
     if (animWrapRef.current) {
@@ -203,21 +219,27 @@ const MainGameBlock: FC<Props> = (props) => {
     }
   }, [windowDimensions]);
 
+  const isLoading = state === "betting";
+  const isEnded = state === "ending";
+
   return (
     <div className={styles.jetMainAnimation}>
       <div className={styles.jetMainAnimationContent}>
-        {/* <div className={styles.jetMainAnimationBg} /> */}
         <div
           className={clsx(styles.jetMainSchedule, styles.scheduleActive, {
-            [styles.scheduleStart]: start,
+            [styles.scheduleEnd]: isLoading || state === "ending",
           })}
         >
           <div
             className={clsx(styles.loading, {
-              [styles.hide]: start,
+              [styles.hide]: !isLoading,
             })}
           >
-            <Loader duration={5} onEnded={handleStart} />
+            <Loader
+              duration={5}
+              onStart={handleStart}
+              onEnded={() => setStart(false)}
+            />
           </div>
 
           <div className={clsx(styles.scheduleBg, styles.scheduleBg1)} />
@@ -225,17 +247,20 @@ const MainGameBlock: FC<Props> = (props) => {
           <div className={clsx(styles.scheduleBg, styles.scheduleBg3)} />
           <div className={clsx(styles.scheduleBg, styles.scheduleBg4)} />
           <div className={styles.luckyJet} ref={animWrapRef}>
-            <div className={styles.currentCoefficient}>
-              <AnimatedCounter
-                from={0}
-                duration={1000}
-                to={current_coefficients[0]}
-              />
+            <div className={clsx(styles.coefficientWrapper, styles[state])}>
+              <div id="main-coefficient" className={styles.currentCoefficient}>
+                {currentCoefficientValue}
+              </div>
+              <div id="flew-away-text" className={styles.coefficientEnded}>
+                Улетел
+              </div>
             </div>
             <div
               className={styles.luckyJet__pilot}
               style={{
-                transform: `translate3d(${boyCounts[secondCountStatus]}px, ${vhCountupBoy}px, 0px)`,
+                transform: isEnded
+                  ? `translate(150%,-200%)`
+                  : `translate(${boyCounts[secondCountStatus]}px, ${vhCountupBoy}px)`,
               }}
             >
               <div className={styles.luckyJet__pilotImg}>

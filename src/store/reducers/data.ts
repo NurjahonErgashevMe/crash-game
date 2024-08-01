@@ -1,5 +1,5 @@
 import { api } from "@/api/axios";
-import { IResponse } from "@/types/types";
+import { IResponse } from "@/types/api";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fetchData = createAsyncThunk("data/fetchData", async () => {

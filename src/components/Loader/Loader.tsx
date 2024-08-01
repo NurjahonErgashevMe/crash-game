@@ -1,10 +1,13 @@
-import { FC, useState, useEffect } from "react";
-import styles from "./Loader.module.scss";
+import { FC, useState, useEffect, useCallback } from "react";
 import clsx from "clsx";
+import { useAppSelector } from "@/hooks/redux";
+
+import styles from "./Loader.module.scss";
 
 interface LoaderProps {
-  duration?: number; // duration in seconds;
+  duration?: number;
   className?: string;
+  onStart?: () => void;
   onEnded?: () => void;
 }
 
@@ -12,24 +15,29 @@ export const Loader: FC<LoaderProps> = ({
   duration = 10,
   className,
   onEnded,
+  onStart,
 }) => {
-  const [isInitialLoading, setIsInitialLoading] = useState(true);
+  const { state } = useAppSelector((state) => state.state);
+  const [isInitialLoading, setIsInitialLoading] = useState(state === "betting");
+
+  const onStateChange = useCallback(() => {
+    switch (state) {
+      case "ending":
+        onEnded?.();
+      case "waiting":
+        setIsInitialLoading(false);
+      case "flying":
+        onStart?.();
+      default:
+        setIsInitialLoading(true);
+    }
+  }, [state]);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsInitialLoading(false);
-    }, (duration - 2) * 1000);
+    onStateChange();
+  }, [state]);
 
-    return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      onEnded?.();
-    }, duration * 1000);
-
-    return () => clearTimeout(timer);
-  }, []);
+  console.log(state, "state");
 
   return (
     <div className={clsx(styles.loaderWrapper, className)}>
@@ -139,7 +147,7 @@ export const Loader: FC<LoaderProps> = ({
             className={styles.straightLineLoader}
             style={
               {
-                "--animation-duration": `${duration - 2}s`,
+                "--animation-duration": `${duration}s`,
               } as React.CSSProperties
             }
           >

@@ -34,16 +34,16 @@
   .scheduleBg2,
   .scheduleBg3,
   .scheduleBg4 {
-    animation-play-state: paused;
+    animation-play-state: running;
   }
-
-  &.scheduleStart {
-
+  
+  &.scheduleEnd {
+    
     .scheduleBg1,
     .scheduleBg2,
     .scheduleBg3,
     .scheduleBg4 {
-      animation-play-state: running;
+      animation-play-state: paused !important;
     }
   }
 }
@@ -166,5 +166,157 @@
 @keyframes scroll {
   100% {
     background-position: -3000px 0px;
+  }
+}
+
+.coefficientWrapper {
+  position: absolute;
+  overflow: hidden;
+  width: 100%;
+  height: 80%;
+  top: 0px;
+  left: 0px;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  z-index: 2;
+  grid-auto-rows: max-content;
+  gap: 2px;
+  opacity: 1;
+
+
+  &.ending {
+    .currentCoefficient {
+      animation: 0.7s ease 0s 1 normal none running oddOpacity;
+    }
+
+    .coefficientEnded {
+      animation: 0.4s ease 0s 1 normal forwards running fadeTop;
+      height: 45px;
+      transition: height 0.4s;
+    }
+  }
+}
+
+.currentCoefficient {
+  font-family: Manrope;
+
+  animation-timing-function: unset;
+  animation-delay: unset;
+  animation-iteration-count: unset;
+  animation-direction: unset;
+  animation-fill-mode: unset;
+  animation-play-state: unset;
+  animation-name: unset;
+  animation-timeline: unset;
+  animation-range: unset;
+  animation-duration: 0.7s;
+
+  display: inline;
+  font-style: normal;
+  font-size: 70.1882px;
+  line-height: 83px;
+  text-align: center;
+  text-transform: uppercase;
+  color: rgb(148, 78, 245);
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+
+  &::before {
+    display: inline;
+    content: "x";
+    font-size: 40.84px;
+    line-height: 48px;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+}
+
+.coefficientEnded {
+  animation-timing-function: unset;
+  animation-delay: unset;
+  animation-iteration-count: unset;
+  animation-direction: unset;
+  animation-play-state: unset;
+  animation-name: unset;
+  animation-timeline: unset;
+  animation-range: unset;
+  animation-duration: 0.4s;
+  animation-fill-mode: forwards;
+  transition: height 0.4s;
+
+  font-family: Manrope;
+  font-size: 34px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 45px;
+  letter-spacing: 0px;
+  text-transform: uppercase;
+  color: rgb(250, 250, 250);
+  text-shadow: rgba(138, 138, 138, 0.5) 0px 0px 21.9869px;
+  opacity: 0;
+  height: 45px;
+}
+
+@keyframes fadeTop {
+  0% {
+    transform: translate(0px, 150px);
+    opacity: 0;
+  }
+
+  50% {
+    transform: translate(0px, 0px);
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes oddOpacity {
+  10% {
+    opacity: 0.5;
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  20% {
+    opacity: 0.5;
+  }
+
+  25% {
+    opacity: 1;
+  }
+
+  30% {
+    opacity: 0.5;
+  }
+
+  35% {
+    opacity: 1;
+  }
+
+  40% {
+    opacity: 0.5;
+  }
+
+  45% {
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.15);
+    opacity: 0.5;
+  }
+
+  55% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
   }
 }

@@ -1,4 +1,4 @@
-import { IBet, ICashOut } from "@/types/types";
+import { IBet, ICashOut } from "@/types/api";
 
 export const betsHistory: IBet[] = [
   {
