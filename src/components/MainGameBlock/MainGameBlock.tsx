@@ -79,6 +79,7 @@ const MainGameBlock: FC<Props> = (props) => {
       onComplete: () => toggleStatus(),
     }
   );
+
   const { value: vwCountupBoyLeft, reset: wCountupBoyResetLeft } = useCountUp({
     isCounting: start,
     start: wrapper_width(0.85),
@@ -87,6 +88,7 @@ const MainGameBlock: FC<Props> = (props) => {
     easing: "linear",
     onComplete: () => toggleStatus(),
   });
+
   const { value: vhCountupBoy, reset: hCountupBoyReset } = useCountUp({
     isCounting: start,
 
@@ -158,6 +160,7 @@ const MainGameBlock: FC<Props> = (props) => {
       },
     }),
   });
+
   const secondCounts = useMemo<Record<"flying" | "left" | "right", number>>(
     () => ({
       flying: Number(vwCountup2),
@@ -166,6 +169,7 @@ const MainGameBlock: FC<Props> = (props) => {
     }),
     [vwCountup2, vwCountup2Left, vwCountup2Right]
   );
+
   const boyCounts = useMemo<Record<"flying" | "left" | "right", number>>(
     () => ({
       flying: Number(vwCountupBoy),
@@ -206,7 +210,6 @@ const MainGameBlock: FC<Props> = (props) => {
   return (
     <div className={styles.jetMainAnimation}>
       <div className={styles.jetMainAnimationContent}>
-        {/* <div className={styles.jetMainAnimationBg} /> */}
         <div
           className={clsx(styles.jetMainSchedule, styles.scheduleActive, {
             [styles.scheduleStart]: start,

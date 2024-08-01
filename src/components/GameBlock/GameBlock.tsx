@@ -12,20 +12,19 @@ const GameBlock: FC = () => {
   const { data, loading, error } = useAppSelector((state) => state.data);
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      dispatch(fetchData());
-    }, 1000);
-
-    return () => clearInterval(intervalId);
+    dispatch(fetchData());
   }, [dispatch]);
 
-  console.log(data, "data");
-  console.log(loading, "loading");
-  console.log(error, "err");
+  console.log(data)
+
   return (
     <div className={style.game}>
       <HistoryGameBlock />
-      <MainGameBlock  />
+      <MainGameBlock 
+      stop_coefficients={data?.start_event} 
+      // current_coefficients={}
+      //  state=""
+           />
       <ButtonGameBlock />
     </div>
   );
