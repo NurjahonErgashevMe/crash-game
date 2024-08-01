@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 body {
-  background-color: rgb(21, 16, 40);
+  background-color: #151028;
   overflow-x: hidden;
 }
 
@@ -21,7 +21,6 @@ body {
   text-decoration: none;
   padding: 0;
   margin: 0;
-  font-family: "Rocketfont", sans-serif;
   font-display: swap;
   font-style: normal;
   font-weight: 300;
@@ -42,7 +41,7 @@ body::-webkit-scrollbar {
 @layer base {
 
   @font-face {
-    font-family: "Open Sans", sans-serif;
+    font-family: "Rocketfont", sans-serif;
     font-style: normal;
     font-weight: 300;
     font-display: swap;
@@ -102,6 +101,12 @@ body::-webkit-scrollbar {
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+  }
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
 }
 
