@@ -117,6 +117,9 @@
   color: white;
   font-family: "Rocketfont";
   font-size: 14.5px;
+  background-color: transparent;
+  border: none;
+  outline: none;
   margin-left: -5px;
 }
 
@@ -206,6 +209,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
   border-radius: 8px;
   font-size: 9px;
 }

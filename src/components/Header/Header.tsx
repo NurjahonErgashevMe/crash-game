@@ -30,12 +30,11 @@ const Header: FC = () => {
 
           <div className={style.two}>
             <div className={style.what}>
-              <WhatIcon style={{ marginLeft: "-1px" }} />
+              <WhatIcon />
               <p className={style.textW}>Как играть?</p>
             </div>
             <div className={style.separator}></div> {/* Добавляем линию */}
             <div className={style.money}>
-              {/* <img src="/public/money.svg" />{" "} */}
               <MoneyIcon />
               <p className={style.text}>125 720.46 ₽</p>
             </div>

@@ -17,19 +17,18 @@ const fixedThree = (number: string | number) =>
   typeof number === "number" ? number.toFixed(3) : Number(number).toFixed(3);
 
 type Props = {
-  state: TResponseState;
-  current_coefficients: [number];
-  stop_coefficients: [number | null];
+  state?: TResponseState;
+  current_coefficients?: [number];
+  stop_coefficients?: [number | null];
 };
 
 const MainGameBlock: FC<Props> = (props) => {
-  const { current_coefficients = 1, state, stop_coefficients } = props;
-
   const animWrapRef = useRef<HTMLDivElement>(null);
   const [start, setStart] = useState<boolean>(false);
   const [secondCountStatus, setSecondCountStatus] = useState<
     "flying" | "left" | "right"
   >("flying");
+
   const [wrapperDimensions, setWrapperDimensions] = useState<TDimensions>();
   const windowDimensions = useWindowDimensions();
 
@@ -229,11 +228,7 @@ const MainGameBlock: FC<Props> = (props) => {
           <div className={clsx(styles.scheduleBg, styles.scheduleBg4)} />
           <div className={styles.luckyJet} ref={animWrapRef}>
             <div className={styles.currentCoefficient}>
-              <AnimatedCounter
-                from={0}
-                duration={1000}
-                to={current_coefficients[0]}
-              />
+              <AnimatedCounter from={0} duration={1000} to={2.2} />
             </div>
             <div
               className={styles.luckyJet__pilot}
