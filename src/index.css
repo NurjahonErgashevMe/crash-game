@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Kalnia+Glaze:wght@100..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -9,6 +9,11 @@ body {
   overflow-x: hidden;
 }
 
+@font-face {
+  font-family: "Rocketfont";
+  font-weight: 300;
+  src: url("/public/fonts/Rocketfont.otf") format("opentype");
+}
 
 * {
   box-sizing: border-box;
@@ -16,11 +21,22 @@ body {
   text-decoration: none;
   padding: 0;
   margin: 0;
-  font-family: "Open Sans", sans-serif !important;
+  font-family: "Rocketfont", sans-serif;
   font-display: swap;
   font-style: normal;
   font-weight: 300;
   scrollbar-width: none;
+}
+
+/* Prevent font size inflation */
+html {
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
 }
 
 @layer base {
