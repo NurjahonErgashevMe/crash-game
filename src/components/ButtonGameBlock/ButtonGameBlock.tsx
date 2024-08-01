@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useCallback } from "react";
 import { Card, CardContent, CardHeader } from "../ui/card";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -12,6 +12,12 @@ import { useToast } from "../ui/use-toast";
 
 const formSchema = z.object({
   deposit: z.coerce
+    .number()
+    .min(18)
+    .max(1000, "Максимальное значение 1000")
+    .default(500)
+    .transform((v) => Number(v) || 0),
+  deposit_2: z.coerce
     .number()
     .min(18)
     .max(1000, "Максимальное значение 1000")
@@ -47,6 +53,10 @@ const increase_deposit_buttons = [
 const ButtonGameBlock: FC = () => {
   const form = useForm<TAutoCashOut>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      deposit: 500,
+      deposit_2: 500,
+    },
   });
   const { toast } = useToast();
 
@@ -55,7 +65,29 @@ const ButtonGameBlock: FC = () => {
       title: "You submitted the following values:",
       description: (
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+          <code className="text-white">
+            {JSON.stringify(data?.deposit, null, 2)}
+          </code>
+        </pre>
+      ),
+    });
+  };
+
+  const increase_deposit = useCallback(
+    (value: number) => {
+      form.setValue("deposit", form.getValues().deposit + value);
+    },
+    [form]
+  );
+
+  const handleOnSubmitDeposit2 = (data: TAutoCashOut) => {
+    toast({
+      title: "You submitted the following values:",
+      description: (
+        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+          <code className="text-white">
+            {JSON.stringify(data?.deposit_2, null, 2)}
+          </code>
         </pre>
       ),
     });
@@ -63,13 +95,13 @@ const ButtonGameBlock: FC = () => {
 
   return (
     <FormProvider {...form}>
-      <form onSubmit={form.handleSubmit(handleOnSubmit)}>
-        <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-2">
+        <form className="w-[49%]" onSubmit={form.handleSubmit(handleOnSubmit)}>
           <Card
             style={{
               background: `linear-gradient(90deg, rgb(36, 29, 71) 0%, rgb(43, 35, 87) 100%)`,
             }}
-            className="w-[49%] text-white shadow-md border-2 border-violet-950"
+            className="text-white shadow-md border-2 border-violet-950"
           >
             <CardHeader className="w-full">
               <RadioGroup
@@ -104,7 +136,6 @@ const ButtonGameBlock: FC = () => {
                   >
                     <Input
                       type="number"
-                      defaultValue={"500 "}
                       {...form.register("deposit")}
                       inputMode="decimal"
                       className="bg-[#231d47] w-full text-white text-base font-bold outline-none border-none"
@@ -119,9 +150,7 @@ const ButtonGameBlock: FC = () => {
                   </div>
                   <Button
                     type="button"
-                    onClick={() =>
-                      form.setValue("deposit", ++form.getValues().deposit)
-                    }
+                    onClick={() => increase_deposit(1)}
                     className="mx-2 p-2 w-max"
                   >
                     <Plus />
@@ -149,11 +178,17 @@ const ButtonGameBlock: FC = () => {
               </div>
             </CardContent>
           </Card>
+        </form>
+
+        <form
+          className="w-[49%]"
+          onSubmit={form.handleSubmit(handleOnSubmitDeposit2)}
+        >
           <Card
             style={{
               background: `linear-gradient(90deg, rgb(36, 29, 71) 0%, rgb(43, 35, 87) 100%)`,
             }}
-            className="w-[49%] text-white shadow-md border-2 border-violet-950"
+            className="text-white shadow-md border-2 border-violet-950"
           >
             <CardHeader className="w-full">
               <RadioGroup
@@ -176,7 +211,7 @@ const ButtonGameBlock: FC = () => {
                   <Button
                     type="button"
                     onClick={() =>
-                      form.setValue("deposit", --form.getValues().deposit)
+                      form.setValue("deposit_2", --form.getValues().deposit)
                     }
                     className="mx-2 p-2 w-max"
                   >
@@ -188,8 +223,7 @@ const ButtonGameBlock: FC = () => {
                   >
                     <Input
                       type="number"
-                      defaultValue={"500 "}
-                      {...form.register("deposit")}
+                      {...form.register("deposit_2")}
                       inputMode="decimal"
                       className="bg-[#231d47] w-full text-white text-base font-bold outline-none border-none"
                     />
@@ -204,7 +238,7 @@ const ButtonGameBlock: FC = () => {
                   <Button
                     type="button"
                     onClick={() =>
-                      form.setValue("deposit", ++form.getValues().deposit)
+                      form.setValue("deposit_2", ++form.getValues().deposit)
                     }
                     className="mx-2 p-2 w-max"
                   >
@@ -223,7 +257,7 @@ const ButtonGameBlock: FC = () => {
                 {increase_deposit_buttons.map((item) => (
                   <Button
                     type="button"
-                    onClick={() => form.setValue("deposit", item.value)}
+                    onClick={() => form.setValue("deposit_2", item.value)}
                     key={item.id}
                     className="w-1/3 mt-2"
                   >
@@ -233,8 +267,8 @@ const ButtonGameBlock: FC = () => {
               </div>
             </CardContent>
           </Card>
-        </div>
-      </form>
+        </form>
+      </div>
     </FormProvider>
   );
 };
