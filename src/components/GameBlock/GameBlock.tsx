@@ -12,15 +12,19 @@ const GameBlock: FC = () => {
   const { data } = useAppSelector((state) => state.data);
 
   useEffect(() => {
-    dispatch(fetchData());
+    const interval = setInterval(() => {
+      dispatch(fetchData());
+    }, 2000);
+    return () => clearInterval(interval);
   }, [dispatch]);
 
-  console.log(data);
+
+  const middleCoefficient = data?.start_event.middle_coefficient;
 
   return (
     <div className={style.game}>
       <HistoryGameBlock />
-      <MainGameBlock />
+      <MainGameBlock current_coefficients={middleCoefficient} />
       <ButtonGameBlock />
     </div>
   );

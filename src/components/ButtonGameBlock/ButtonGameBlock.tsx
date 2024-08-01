@@ -13,14 +13,14 @@ import { useToast } from "../ui/use-toast";
 const formSchema = z.object({
   deposit: z.coerce
     .number()
-    .min(18)
-    .max(1000, "Максимальное значение 1000")
+    .min(10)
+    .max(200000, "Максимальное значение 200000")
     .default(500)
     .transform((v) => Number(v) || 0),
   deposit_2: z.coerce
     .number()
-    .min(18)
-    .max(1000, "Максимальное значение 1000")
+    .min(10)
+    .max(200000, "Максимальное значение 200000")
     .default(500)
     .transform((v) => Number(v) || 0),
 });
@@ -136,6 +136,7 @@ const ButtonGameBlock: FC = () => {
                   >
                     <Input
                       type="number"
+                      style={{ fontFamily: "Rocketfont" }}
                       {...form.register("deposit")}
                       inputMode="decimal"
                       className="bg-[#231d47] w-full text-white text-base font-bold outline-none border-none"
@@ -143,7 +144,7 @@ const ButtonGameBlock: FC = () => {
                     <Button
                       type="button"
                       variant="ghost"
-                      className="mx-2 hover:bg-transparent text-white hover:text-white"
+                      className="mx-2 hover:bg-transparent py-2 text-white hover:text-white"
                     >
                       ₽
                     </Button>
@@ -158,8 +159,14 @@ const ButtonGameBlock: FC = () => {
                 </div>
                 <Button
                   type="submit"
-                  style={{ fontFamily: "Rocketfont" }}
-                  className="w-1/2"
+                  style={{
+                    fontFamily: "Rocketfont",
+                    background: `linear-gradient(263.87deg,
+                    rgb(148, 78, 245) 0%,
+                    rgb(92, 36, 252) 100%)`,
+                    textShadow: `#8a8a8a 0px 0px 20px`,
+                  }}
+                  className="w-1/2 py-7"
                 >
                   CTABKA
                 </Button>
@@ -211,7 +218,7 @@ const ButtonGameBlock: FC = () => {
                   <Button
                     type="button"
                     onClick={() =>
-                      form.setValue("deposit_2", --form.getValues().deposit)
+                      form.setValue("deposit_2", --form.getValues().deposit_2)
                     }
                     className="mx-2 p-2 w-max"
                   >
@@ -225,6 +232,7 @@ const ButtonGameBlock: FC = () => {
                       type="number"
                       {...form.register("deposit_2")}
                       inputMode="decimal"
+                      style={{ fontFamily: "Rocketfont" }}
                       className="bg-[#231d47] w-full text-white text-base font-bold outline-none border-none"
                     />
                     <Button
@@ -238,7 +246,7 @@ const ButtonGameBlock: FC = () => {
                   <Button
                     type="button"
                     onClick={() =>
-                      form.setValue("deposit_2", ++form.getValues().deposit)
+                      form.setValue("deposit_2", ++form.getValues().deposit_2)
                     }
                     className="mx-2 p-2 w-max"
                   >
@@ -247,8 +255,14 @@ const ButtonGameBlock: FC = () => {
                 </div>
                 <Button
                   type="submit"
-                  style={{ fontFamily: "Rocketfont" }}
-                  className="w-1/2"
+                  style={{
+                    fontFamily: "Rocketfont",
+                    background: `linear-gradient(263.87deg,
+                    rgb(148, 78, 245) 0%,
+                    rgb(92, 36, 252) 100%)`,
+                    textShadow: `#8a8a8a 0px 0px 20px`,
+                  }}
+                  className="w-1/2 py-7"
                 >
                   CTABKA
                 </Button>

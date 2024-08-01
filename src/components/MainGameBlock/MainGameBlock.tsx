@@ -18,11 +18,11 @@ const fixedThree = (number: string | number) =>
 
 type Props = {
   state?: TResponseState;
-  current_coefficients?: [number];
+  current_coefficients?: number;
   stop_coefficients?: [number | null];
 };
 
-const MainGameBlock: FC<Props> = (props) => {
+const MainGameBlock: FC<Props> = ({ current_coefficients }) => {
   const animWrapRef = useRef<HTMLDivElement>(null);
   const [start, setStart] = useState<boolean>(false);
   const [secondCountStatus, setSecondCountStatus] = useState<
@@ -206,6 +206,7 @@ const MainGameBlock: FC<Props> = (props) => {
     }
   }, [windowDimensions]);
 
+
   return (
     <div className={styles.jetMainAnimation}>
       <div className={styles.jetMainAnimationContent}>
@@ -221,7 +222,16 @@ const MainGameBlock: FC<Props> = (props) => {
           >
             <Loader duration={5} onEnded={handleStart} />
           </div>
-
+          <div className="relative">
+            {current_coefficients && (
+              <div
+                style={{ fontFamily: "Rocketfont" }}
+                className="text-violet-400 text-3xl font-medium text-center relative top-[100px]"
+              >
+                X {current_coefficients}
+              </div>
+            )}
+          </div>{" "}
           <div className={clsx(styles.scheduleBg, styles.scheduleBg1)} />
           <div className={clsx(styles.scheduleBg, styles.scheduleBg2)} />
           <div className={clsx(styles.scheduleBg, styles.scheduleBg3)} />
