@@ -245,7 +245,6 @@ $main-color: linear-gradient(90deg, rgb(31, 24, 61) 0%, rgb(38, 31, 77) 100%);
 
   .actionButtonWrapper {
     width: 100%;
-    background-color: red;
     display: flex;
     align-items: center;
     background: none;
@@ -295,6 +294,46 @@ $main-color: linear-gradient(90deg, rgb(31, 24, 61) 0%, rgb(38, 31, 77) 100%);
       border-radius: 12px 12px 0px 0px;
       background: linear-gradient(263.87deg, rgb(148, 78, 245) 0%, rgb(92, 36, 252) 100%);
     }
+
+    &.bid {
+      ::after {
+        background: linear-gradient(263.87deg, rgb(148, 78, 245) 0%, rgb(92, 36, 252) 100%);
+      }
+
+      .makeBetButtonContent {
+        background: linear-gradient(263.87deg, rgb(148, 78, 245) 0%, rgb(92, 36, 252) 100%);
+        box-shadow: rgba(25, 201, 245, 0.1) 0px 10px 20px, rgba(92, 36, 252, 0.1) 0px 10px 20px, rgb(148, 78, 245) 0px -2px 4px inset, rgba(148, 78, 245, 0.6) 0px -8px 8px inset;
+      }
+    }
+
+    &.cancel {
+      ::after {
+        background: linear-gradient(263.87deg, rgb(245, 78, 118) 0%, rgb(252, 36, 75) 100%);
+      }
+
+      .makeBetButtonContent {
+        background: linear-gradient(263.87deg, rgb(245, 78, 118) 0%, rgb(252, 36, 75) 100%);
+        box-shadow: rgba(245, 25, 65, 0.1) 0px 10px 20px, rgba(252, 36, 101, 0.1) 0px 10px 20px, rgb(245, 78, 118) 0px -2px 4px inset, rgba(245, 78, 128, 0.6) 0px -8px 8px inset;
+      }
+    }
+
+    &.take {
+
+      ::after {
+        background: linear-gradient(263.87deg, rgb(253, 187, 78) 0%, rgb(245, 103, 25) 100%)
+      }
+
+      .makeBetButtonContent {
+        background: linear-gradient(263.87deg, rgb(253, 187, 78) 0%, rgb(245, 103, 25) 100%);
+        box-shadow: rgba(253, 187, 78, 0.1) 0px 10px 20px, rgba(253, 187, 78, 0.1) 0px 10px 20px, rgb(253, 187, 78) 0px -2px 4px inset, rgba(253, 187, 78, 0.6) 0px -8px 8px inset;
+      }
+    }
+
+    &.wait{
+      ::after{
+        background: none;
+      }
+    }
   }
 
   .makeBetButtonContent {
@@ -318,20 +357,6 @@ $main-color: linear-gradient(90deg, rgb(31, 24, 61) 0%, rgb(38, 31, 77) 100%);
     font-weight: 700;
     cursor: pointer;
 
-    &.bid {
-      background: linear-gradient(263.87deg, rgb(148, 78, 245) 0%, rgb(92, 36, 252) 100%);
-      box-shadow: rgba(25, 201, 245, 0.1) 0px 10px 20px, rgba(92, 36, 252, 0.1) 0px 10px 20px, rgb(148, 78, 245) 0px -2px 4px inset, rgba(148, 78, 245, 0.6) 0px -8px 8px inset;
-    }
-
-    &.cancel {
-      background: linear-gradient(263.87deg, rgb(245, 78, 118) 0%, rgb(252, 36, 75) 100%);
-      box-shadow: rgba(245, 25, 65, 0.1) 0px 10px 20px, rgba(252, 36, 101, 0.1) 0px 10px 20px, rgb(245, 78, 118) 0px -2px 4px inset, rgba(245, 78, 128, 0.6) 0px -8px 8px inset;
-    }
-
-    &.take {
-      background: linear-gradient(263.87deg, rgb(253, 187, 78) 0%, rgb(245, 103, 25) 100%);
-      box-shadow: rgba(253, 187, 78, 0.1) 0px 10px 20px, rgba(253, 187, 78, 0.1) 0px 10px 20px, rgb(253, 187, 78) 0px -2px 4px inset, rgba(253, 187, 78, 0.6) 0px -8px 8px inset;
-    }
 
   }
 }

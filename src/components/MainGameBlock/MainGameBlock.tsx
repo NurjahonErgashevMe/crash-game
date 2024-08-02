@@ -265,7 +265,7 @@ const MainGameBlock: FC<Props> = () => {
             >
               <div className={styles.luckyJet__pilotImg}>
                 <img src="fire.svg" alt="fire" className={styles.fire} />
-                <img src="boy.gif" alt="boy" className={styles.boy} />
+                <img src="boy.webp" alt="boy" className={styles.boy} />
               </div>
             </div>
             <svg className={styles.luckyJet__svg}>
