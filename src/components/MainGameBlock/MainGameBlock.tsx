@@ -122,11 +122,13 @@ const MainGameBlock: FC<Props> = () => {
   // for line
   const { value: vwCountup, reset: wCountupReset } = useCountUp({
     isCounting: start,
+    start: 0,
     end: wrapper_width(0.52),
     duration: 3,
   });
   const { value: vwCountup2, reset: wCountupReset2 } = useCountUp({
     isCounting: start,
+    start: 0,
     end: wrapper_width(0.8),
     duration: 3,
   });
@@ -193,6 +195,8 @@ const MainGameBlock: FC<Props> = () => {
         height: animWrapRef.current?.clientHeight,
       });
 
+      console.log("start");
+
       setSecondCountStatus("flying");
 
       wCountupBoyReset();
@@ -202,9 +206,16 @@ const MainGameBlock: FC<Props> = () => {
       wCountupReset2();
       hCountupReset2();
 
+      // wCountupResetLeft();
+      // wCountupResetRight();
+
       currentCoefficientReset();
     }
   }, [state]);
+
+  const handleEnd = useCallback(() => {
+    setStart(false);
+  }, []);
 
   useEffect(() => {
     currentCoefficientReset();
@@ -235,11 +246,7 @@ const MainGameBlock: FC<Props> = () => {
               [styles.hide]: !isLoading,
             })}
           >
-            <Loader
-              duration={5}
-              onStart={handleStart}
-              onEnded={() => setStart(false)}
-            />
+            <Loader duration={5} onStart={handleStart} onEnded={handleEnd} />
           </div>
 
           <div className={clsx(styles.scheduleBg, styles.scheduleBg1)} />
@@ -256,10 +263,12 @@ const MainGameBlock: FC<Props> = () => {
               </div>
             </div>
             <div
-              className={styles.luckyJet__pilot}
+              className={clsx(styles.luckyJet__pilot, {
+                [styles.ended]: isEnded,
+              })}
               style={{
                 transform: isEnded
-                  ? `translate(150%,-200%)`
+                  ? `translate(3000%,-200%)`
                   : `translate(${boyCounts[secondCountStatus]}px, ${vhCountupBoy}px)`,
               }}
             >
@@ -289,22 +298,30 @@ const MainGameBlock: FC<Props> = () => {
                   className={styles.luckyJet__svgStroke}
                   fill="transparent"
                   stroke="url(#grad_stroke)"
-                  d={`M 0 ${wrapper_height()} Q ${fixedThree(
-                    Number(vwCountup)
-                  )} ${wrapper_height()} ${fixedThree(
-                    Number(secondCounts[secondCountStatus])
-                  )} ${fixedThree(Number(vhCountup2))}`}
+                  d={
+                    isLoading
+                      ? `M 0 0 Q 0 0 Q 0 0`
+                      : `M 0 ${wrapper_height()} Q ${fixedThree(
+                          Number(vwCountup)
+                        )} ${wrapper_height()} ${fixedThree(
+                          Number(secondCounts[secondCountStatus])
+                        )} ${fixedThree(Number(vhCountup2))}`
+                  }
                 ></path>
                 <path
                   className={styles.luckyJet__svgGrad}
                   fill="url(#grad)"
-                  d={`M 0 ${wrapper_height()} Q ${fixedThree(
-                    Number(vwCountup)
-                  )} ${wrapper_height()} ${fixedThree(
-                    Number(secondCounts[secondCountStatus])
-                  )} ${fixedThree(Number(vhCountup2))} L ${fixedThree(
-                    Number(secondCounts[secondCountStatus])
-                  )} ${wrapper_height()} Z`}
+                  d={
+                    isLoading
+                      ? `M 0 0 Q 0 0 0 0 L 0 0 Z`
+                      : `M 0 ${wrapper_height()} Q ${fixedThree(
+                          Number(vwCountup)
+                        )} ${wrapper_height()} ${fixedThree(
+                          Number(secondCounts[secondCountStatus])
+                        )} ${fixedThree(Number(vhCountup2))} L ${fixedThree(
+                          Number(secondCounts[secondCountStatus])
+                        )} ${wrapper_height()} Z`
+                  }
                 ></path>
               </g>
             </svg>

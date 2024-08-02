@@ -130,6 +130,10 @@
     position: absolute;
     left: 0;
     top: 0;
+
+    &.ended{
+      transition:  all .2s;
+    }
   }
 
   &__svg {

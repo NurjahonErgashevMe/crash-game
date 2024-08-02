@@ -18,7 +18,7 @@ export const Loader: FC<LoaderProps> = ({
   onStart,
 }) => {
   const { state } = useAppSelector((state) => state.state);
-  const [isInitialLoading, setIsInitialLoading] = useState(state === "betting");
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
 
   const onStateChange = useCallback(() => {
     switch (state) {
@@ -31,13 +31,19 @@ export const Loader: FC<LoaderProps> = ({
       default:
         setIsInitialLoading(true);
     }
-  }, [state]);
+  }, [state, isInitialLoading]);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setIsInitialLoading(false);
+    }, duration);
+
+    return () => clearTimeout(timeout);
+  }, []);
 
   useEffect(() => {
     onStateChange();
   }, [state]);
-
-  console.log(state, "state");
 
   return (
     <div className={clsx(styles.loaderWrapper, className)}>

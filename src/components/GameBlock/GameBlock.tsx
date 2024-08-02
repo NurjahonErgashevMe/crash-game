@@ -23,7 +23,7 @@ const GameBlock: FC = () => {
   useEffect(() => {
     const intervalId = setInterval(() => {
       dispatch(fetchData());
-    }, 3000);
+    }, 1500);
 
     return () => clearInterval(intervalId);
   }, [dispatch]);
@@ -36,8 +36,6 @@ const GameBlock: FC = () => {
     }
   }, [data]);
   
-  // console.log(data?.state , 'state')
-
   return (
     <div className={style.game}>
       <HistoryGameBlock />
