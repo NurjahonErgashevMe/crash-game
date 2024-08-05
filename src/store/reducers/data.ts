@@ -34,7 +34,7 @@ const dataSlice = createSlice({
         state.data = action.payload;
       })
       .addCase(fetchData.rejected, (state, action) => {
-        console.log(action.error, "error");
+        // console.log(action.error, "error");
         state.loading = false;
         state.error = "Ошибка";
       });

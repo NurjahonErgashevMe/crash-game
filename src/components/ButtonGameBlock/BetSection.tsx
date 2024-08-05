@@ -15,11 +15,11 @@ const betButtonTexts: Record<TBetStatus, string> = {
 
 interface BetSectionProps {
   bets: Record<number, TBet>;
-  state: string;
-  dispatch: any;
-  register: any;
-  setValue: any;
-  getValues: any;
+  state?: string;
+  dispatch?: any;
+  register?: any;
+  setValue?: any;
+  getValues?: any;
   betIndex: TBetButtonsIndex;
   changeAutoOutputCoefficient: (value: string, index: TBetButtonsIndex) => void;
   blurAutoOutputCoefficient: (e: any, index: TBetButtonsIndex) => void;

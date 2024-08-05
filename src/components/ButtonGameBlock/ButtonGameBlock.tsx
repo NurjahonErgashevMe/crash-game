@@ -1,12 +1,20 @@
-import { FC } from "react";
-import BetSection from "./BetSection"; // Import the new component
+import { FC, useCallback, useEffect } from "react";
+import BetSection from "./BetSection";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   TBetButtonsIndex,
-  getCurrentBetButton,
+  changeBetAutoBid,
+  changeBetAutoOutput,
+  changeBetAutoOutputCoefficent,
+  changeBetStatus,
+  changeBetWinning,
+  changeBetBid,
+  addBetBid,
+  removeBetBid,
+  changeBetMoney,
 } from "@/store/reducers/BetSlice";
 import style from "./ButtonGameBlock.module.scss";
 import { formatInputValue } from "@/helpers/formatInputValue";
@@ -18,6 +26,7 @@ import {
 import { isValidNumber } from "@/shared/validations";
 import { formatStringWithSpaces } from "@/helpers/formatWithSpace";
 import { removeSpacesOnWord } from "@/helpers/removeSpaces";
+import { useGame } from "@/hooks/useGame";
 
 const schema = z.object({
   autoOutputCoefficient: z
@@ -33,7 +42,12 @@ const schema = z.object({
 const ButtonGameBlock: FC = () => {
   const { bets } = useAppSelector((state) => state.bets);
   const { state } = useAppSelector((state) => state.state);
+  const { currentCoefficient } = useAppSelector(
+    (state) => state.coefficentHistory
+  );
+
   const dispatch = useAppDispatch();
+
   const {
     register,
     setValue,
@@ -55,11 +69,12 @@ const ButtonGameBlock: FC = () => {
   ) => {
     const formatedValue = formatInputValue(value);
     if (isValidNumber(value)) {
-      setValue("autoFirstOutputCoefficient", formatedValue);
+      setValue(
+        !index ? "autoFirstOutputCoefficient" : "autoFirstOutputCoefficient",
+        formatedValue
+      );
       dispatch(
-        getCurrentBetButton(index).changeAutoOutputCoefficient(
-          Number(formatedValue)
-        )
+        changeBetAutoOutputCoefficent({ index, value: Number(formatedValue) })
       );
     }
   };
@@ -69,9 +84,7 @@ const ButtonGameBlock: FC = () => {
     const formatedValue = formatInputValue(filteredValue, 5);
     const newValue = formatStringWithSpaces(formatedValue);
     setValue(!index ? "firstBid" : "secondBid", newValue);
-    dispatch(
-      getCurrentBetButton(index).changeBetBid(parseFloat(formatedValue))
-    );
+    dispatch(changeBetBid({ index, value: parseFloat(formatedValue) }));
   };
 
   const removeBid = (number: number, index: TBetButtonsIndex) => {
@@ -83,7 +96,7 @@ const ButtonGameBlock: FC = () => {
       : "secondBid";
     const value = removeSpacesOnWord(getValues(currentBid));
     setValue(currentBid, `${parseFloat(value) - number}`);
-    dispatch(getCurrentBetButton(index).removeBetBid(number));
+    dispatch(removeBetBid({ index, value: number }));
   };
 
   const addBid = (number: number, index: TBetButtonsIndex) => {
@@ -95,7 +108,7 @@ const ButtonGameBlock: FC = () => {
       : "secondBid";
     const value = removeSpacesOnWord(getValues(currentBid));
     setValue(currentBid, `${parseFloat(value) + number}`);
-    dispatch(getCurrentBetButton(index).addBetBid(number));
+    dispatch(addBetBid({ index, value: number }));
   };
 
   const blurAutoOutputCoefficient = (e: any, index: TBetButtonsIndex) => {
@@ -113,68 +126,112 @@ const ButtonGameBlock: FC = () => {
 
   const changeAutoBid = (checked: boolean, index: TBetButtonsIndex) => {
     if (checked) {
-      dispatch(getCurrentBetButton(index).changeBetAutoStatus("cancel"));
+      dispatch(changeBetStatus({ index, value: "cancel" }));
     } else {
-      dispatch(getCurrentBetButton(index).changeBetAutoStatus("bid"));
+      dispatch(changeBetStatus({ index, value: "bid" }));
     }
-    dispatch(getCurrentBetButton(index).changeBetAutoBid(checked));
+    dispatch(changeBetAutoBid({ index, value: checked }));
   };
 
   const changeAutoOutput = (checked: boolean, index: TBetButtonsIndex) => {
-    dispatch(getCurrentBetButton(index).changeBetAutoOutput(checked));
+    dispatch(changeBetAutoOutput({ index, value: checked }));
   };
 
   const handleBet = (index: TBetButtonsIndex) => {
-    if (bets[index].moneyBetted && state === "flying") {
-      dispatch(getCurrentBetButton(index).changeBetAutoStatus("bid"));
-    }
+    const status = bets[index].status;
 
-    if (!bets[index].moneyBetted) {
-      switch (state) {
-        case "flying":
-          dispatch(getCurrentBetButton(index).changeBetAutoStatus("cancel"));
-          break;
-        case "betting":
-          dispatch(getCurrentBetButton(index).changeBetAutoStatus("wait"));
+    if (bets[index].moneyBetted) {
+      if (state === "flying") {
+        dispatch(changeBetStatus({ index, value: "bid" }));
+        dispatch(changeBetMoney({ index, value: false }));
+        alert(`taked! won - ${bets[index].bid * currentCoefficient}`);
+      }
+    } else {
+      if (status === "cancel") {
+        dispatch(changeBetStatus({ index, value: "bid" }));
+        dispatch(changeBetMoney({ index, value: false }));
+      } else if (status === "take") {
+        dispatch(changeBetStatus({ index, value: "bid" }));
+        dispatch(changeBetMoney({ index, value: false }));
+      } else if (status === "bid") {
+        if (state === "flying") {
+          if (!bets[index].moneyBetted) {
+            dispatch(changeBetStatus({ index, value: "cancel" }));
+            dispatch(changeBetMoney({ index, value: false }));
+          } else {
+            dispatch(changeBetStatus({ index, value: "bid" }));
+            dispatch(changeBetMoney({ index, value: true }));
+          }
+        } else {
+          dispatch(changeBetStatus({ index, value: "wait" }));
+          dispatch(changeBetMoney({ index, value: true }));
+        }
       }
     }
   };
+
+  const onChangeState = useCallback(
+    (index: TBetButtonsIndex) => {
+      const status = bets[index].status;
+      if (bets[index].moneyBetted) {
+        if (state === "flying") {
+          dispatch(changeBetStatus({ index, value: "take" }));
+        } else if (state === "ending") {
+          if (status === "take") {
+            dispatch(changeBetStatus({ index, value: "bid" }));
+            dispatch(changeBetMoney({ index, value: false }));
+          } else if (status === "cancel") {
+            dispatch(changeBetStatus({ index, value: "wait" }));
+            dispatch(changeBetMoney({ index, value: true }));
+          }
+        } else {
+          if (status === "cancel") {
+            dispatch(changeBetStatus({ index, value: "wait" }));
+            dispatch(changeBetMoney({ index, value: true }));
+          }
+        }
+      } else {
+        if (status === "cancel") {
+          dispatch(changeBetStatus({ index, value: "wait" }));
+          dispatch(changeBetMoney({ index, value: true }));
+        }
+      }
+    },
+    [state, bets]
+  );
+
+  useEffect(() => {
+    onChangeState(0);
+    onChangeState(1);
+  }, [state]);
 
   return (
     <div className={style.main}>
       <div className={style.container}>
         <BetSection
-          changeBid={changeBid}
           betIndex={0}
-          bets={bets}
-          state={state}
-          dispatch={dispatch}
           register={register}
-          setValue={setValue}
-          getValues={getValues}
-          changeAutoOutputCoefficient={changeAutoOutputCoefficient}
+          bets={bets}
+          addBid={addBid}
+          removeBid={removeBid}
+          changeBid={changeBid}
           blurAutoOutputCoefficient={blurAutoOutputCoefficient}
           changeAutoBid={changeAutoBid}
           changeAutoOutput={changeAutoOutput}
-          removeBid={removeBid}
-          addBid={addBid}
+          changeAutoOutputCoefficient={changeAutoOutputCoefficient}
           handleBet={handleBet}
         />
         <BetSection
-          changeBid={changeBid}
           betIndex={1}
-          bets={bets}
-          state={state}
-          dispatch={dispatch}
           register={register}
-          setValue={setValue}
-          getValues={getValues}
-          changeAutoOutputCoefficient={changeAutoOutputCoefficient}
+          bets={bets}
+          addBid={addBid}
+          removeBid={removeBid}
+          changeBid={changeBid}
           blurAutoOutputCoefficient={blurAutoOutputCoefficient}
           changeAutoBid={changeAutoBid}
           changeAutoOutput={changeAutoOutput}
-          removeBid={removeBid}
-          addBid={addBid}
+          changeAutoOutputCoefficient={changeAutoOutputCoefficient}
           handleBet={handleBet}
         />
       </div>
