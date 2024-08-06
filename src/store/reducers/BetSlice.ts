@@ -35,31 +35,59 @@ export const BetSlice = createSlice({
   name: "bet",
   initialState,
   reducers: {
-    changeBetWinning(state, action: PayloadAction<{ index: TBetButtonsIndex, value: number | null }>) {
+    changeBetWinning(
+      state,
+      action: PayloadAction<{ index: TBetButtonsIndex; value: number | null }>
+    ) {
       state.bets[action.payload.index].winning = action.payload.value;
     },
-    changeBetAutoBid(state, action: PayloadAction<{ index: TBetButtonsIndex, value: boolean }>) {
+    changeBetAutoBid(
+      state,
+      action: PayloadAction<{ index: TBetButtonsIndex; value: boolean }>
+    ) {
       state.bets[action.payload.index].autoBid = action.payload.value;
     },
-    changeBetAutoOutputCoefficent(state, action: PayloadAction<{ index: TBetButtonsIndex, value: number }>) {
-      state.bets[action.payload.index].autoOutputCoefficent = action.payload.value;
+    changeBetAutoOutputCoefficent(
+      state,
+      action: PayloadAction<{ index: TBetButtonsIndex; value: number }>
+    ) {
+      state.bets[action.payload.index].autoOutputCoefficent =
+        action.payload.value;
     },
-    changeBetAutoOutput(state, action: PayloadAction<{ index: TBetButtonsIndex, value: boolean }>) {
+    changeBetAutoOutput(
+      state,
+      action: PayloadAction<{ index: TBetButtonsIndex; value: boolean }>
+    ) {
       state.bets[action.payload.index].autoOutput = action.payload.value;
     },
-    changeBetStatus(state, action: PayloadAction<{ index: TBetButtonsIndex, value: TBetStatus }>) {
+    changeBetStatus(
+      state,
+      action: PayloadAction<{ index: TBetButtonsIndex; value: TBetStatus }>
+    ) {
       state.bets[action.payload.index].status = action.payload.value;
     },
-    changeBetBid(state, action: PayloadAction<{ index: TBetButtonsIndex, value: number }>) {
+    changeBetBid(
+      state,
+      action: PayloadAction<{ index: TBetButtonsIndex; value: number }>
+    ) {
       state.bets[action.payload.index].bid = action.payload.value;
     },
-    addBetBid(state, action: PayloadAction<{ index: TBetButtonsIndex, value: number }>) {
+    addBetBid(
+      state,
+      action: PayloadAction<{ index: TBetButtonsIndex; value: number }>
+    ) {
       state.bets[action.payload.index].bid += action.payload.value;
     },
-    removeBetBid(state, action: PayloadAction<{ index: TBetButtonsIndex, value: number }>) {
+    removeBetBid(
+      state,
+      action: PayloadAction<{ index: TBetButtonsIndex; value: number }>
+    ) {
       state.bets[action.payload.index].bid -= action.payload.value;
     },
-    changeBetMoney(state, action: PayloadAction<{ index: TBetButtonsIndex, value: boolean }>) {
+    changeBetMoney(
+      state,
+      action: PayloadAction<{ index: TBetButtonsIndex; value: boolean }>
+    ) {
       state.bets[action.payload.index].moneyBetted = action.payload.value;
     },
   },

@@ -146,6 +146,10 @@ $main-color: linear-gradient(90deg, rgb(31, 24, 61) 0%, rgb(38, 31, 77) 100%);
     border-radius: 10px;
     pointer-events: all;
     transition: opacity 0.32s;
+
+    &.disable{
+      opacity: 0.5;
+    }
   }
 
   .betControl {

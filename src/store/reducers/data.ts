@@ -2,11 +2,26 @@ import { api } from "@/api/axios";
 import { IResponse } from "@/types/api";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-export const fetchData = createAsyncThunk("data/fetchData", async () => {
-  const response = await api.get("");
-  return response.data;
-});
+// export const fetchData = createAsyncThunk("data/fetchData", async () => {
+//   const response = await api.get("/replay");
+//   return response.data;
+// });
 
+export const fetchData = createAsyncThunk(
+  "data/fetchData",
+  async (_, { rejectWithValue }) => {
+    try {
+      const coefficient = await api.get<IResponse>("/replay");
+      return new Promise<IResponse>((resolve) => {
+        setTimeout(() => {
+          resolve(coefficient.data);
+        }, 2000);
+      });
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
 type DataSlice = {
   data: IResponse | null;
   loading: boolean;

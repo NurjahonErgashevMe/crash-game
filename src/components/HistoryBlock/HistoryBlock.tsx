@@ -2,9 +2,10 @@ import { FC } from "react";
 import Tabs, { Tab } from "../Tabs/Tabs";
 
 import style from "./HistoryBlock.module.scss";
-import { betsHistory, cashOutHistory, ICashOut } from "@/mocks/betHistory";
+// import { betsHistory, cashOutHistory, ICashOut } from "@/mocks/betHistory";
 import clsx from "clsx";
 import { getCoefficentColor } from "@/helpers/getCoefficentColor";
+import { useAppSelector } from "@/hooks/redux";
 
 const tabs: Tab[] = [
   { name: "Все", disabled: true },
@@ -12,10 +13,12 @@ const tabs: Tab[] = [
   { name: "Топ", disabled: true },
 ];
 
-const isBetDone = (user_id: string): ICashOut | undefined =>
-  cashOutHistory.find((cash) => cash.thanus_user_id === user_id);
+// const isBetDone = (user_id: string): ICashOut | undefined =>
+//   cashOutHistory.find((cash) => cash.thanus_user_id === user_id);
 
 const HistoryBlock: FC = () => {
+  const { bet } = useAppSelector((state) => state.betHistory);
+
   return (
     <section className={style.section}>
       <div className={style.container}>
@@ -25,32 +28,32 @@ const HistoryBlock: FC = () => {
           </div>
         </div>
         <div className={style.history}>
-          {betsHistory.map((bet) => {
-            const isDone = isBetDone(bet.thanus_user_id);
+          {bet.slice(0, 10).map((bet, index) => {
+            const isDone = !!bet.get;
             return (
               <div
                 className={clsx(style.bet, {
                   [style.betDone]: !!isDone,
                 })}
-                key={bet.event_id}
+                key={index}
               >
-                <b className={style.betSize}>{bet.bet_size.toFixed(2)}₽</b>
+                <b className={style.betSize}>{bet.put.toFixed(2)}₽</b>
                 <div
                   className={style.coefficient}
                   style={{
                     backgroundColor: isDone
-                      ? getCoefficentColor(isDone.coefficient)
+                      ? getCoefficentColor(bet.coefficent)
                       : "transparent",
                   }}
                 >
-                  {isDone ? `${isDone.coefficient}x` : "-"}
+                  {isDone ? `${bet.coefficent}x` : "-"}
                 </div>
                 <div
                   className={clsx(style.prize, {
                     [style.done]: isDone,
                   })}
                 >
-                  {isDone ? `${isDone.prize_size.toFixed(2)}₽` : "-"}
+                  {isDone ? `${bet.get.toFixed(2)}₽` : "-"}
                 </div>
               </div>
             );

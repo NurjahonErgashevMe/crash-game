@@ -98,22 +98,6 @@
   animation: 70s scrolltop infinite linear;
 }
 
-.loading {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  font-size: 50px;
-  z-index: 10;
-  display: flex;
-  background-color: #151028;
-  z-index: 100;
-
-  &.hide {
-    display: none;
-  }
-}
 
 .luckyJet {
   outline: 1px solid;

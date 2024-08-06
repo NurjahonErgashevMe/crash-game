@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import clsx from "clsx";
 
 import styles from "./HistoryGameBlock.module.scss";
@@ -16,6 +16,7 @@ const HistoryGameBlock: FC = () => {
   // const toggleViewHistory = () => {
   //   setViewHistory((prev) => !prev);
   // };
+
   return (
     <section
       className={clsx(styles.section, {

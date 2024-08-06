@@ -52,7 +52,9 @@ const BetSection: FC<BetSectionProps> = ({
   const isAutoOutputDisabled = state === "flying";
 
   const isControllerDisable = (index: TBetButtonsIndex) =>
-    bets[index].moneyBetted && bets[index].status !== "bid";
+    bets[index].moneyBetted ||
+    bets[index].status === "cancel" ||
+    bets[index].status === "wait";
 
   return (
     <div className={style.bet}>
@@ -64,10 +66,11 @@ const BetSection: FC<BetSectionProps> = ({
         >
           <Checkbox
             checked={bets[betIndex].autoBid}
-            setChecked={(checked) => changeAutoBid(checked, betIndex)}
+            // setChecked={(checked) => changeAutoBid(checked, betIndex)}
+            setChecked={() => {}}
           />
           <div
-            onClick={() => changeAutoBid(!bets[betIndex].autoBid, betIndex)}
+            // onClick={() => changeAutoBid(!bets[betIndex].autoBid, betIndex)}
             className={style.checkboxLabel}
           >
             Автоставка
@@ -80,12 +83,13 @@ const BetSection: FC<BetSectionProps> = ({
         >
           <Checkbox
             checked={bets[betIndex].autoOutput}
-            setChecked={(checked) => changeAutoOutput(checked, betIndex)}
+            // setChecked={(checked) => changeAutoOutput(checked, betIndex)}
+            setChecked={() => {}}
           />
           <div
-            onClick={() =>
-              changeAutoOutput(!bets[betIndex].autoOutput, betIndex)
-            }
+            // onClick={() =>
+            //   changeAutoOutput(!bets[betIndex].autoOutput, betIndex)
+            // }
             className={style.checkboxLabel}
           >
             Автовывод
@@ -192,6 +196,9 @@ const BetSection: FC<BetSectionProps> = ({
           onClick={() => handleBet(betIndex)}
         >
           <div className={style.makeBetButtonContent}>
+            {betButtonTexts[bets[betIndex].status] === "take"
+              ? currentCoef
+              : null}
             {betButtonTexts[bets[betIndex].status]}
           </div>
         </button>

@@ -26,7 +26,10 @@ import {
 import { isValidNumber } from "@/shared/validations";
 import { formatStringWithSpaces } from "@/helpers/formatWithSpace";
 import { removeSpacesOnWord } from "@/helpers/removeSpaces";
-import { useGame } from "@/hooks/useGame";
+import { historyActions } from "@/store/reducers/CoefficientHistorySlice";
+import { betHistoryActions } from "@/store/reducers/BetHistorySlice";
+import { addToBalance, removeFromBalance } from "@/store/reducers/BalansSlice";
+import { alertHistoryActions } from "@/store/reducers/AlertSlice";
 
 const schema = z.object({
   autoOutputCoefficient: z
@@ -40,11 +43,11 @@ const schema = z.object({
 });
 
 const ButtonGameBlock: FC = () => {
-  const { bets } = useAppSelector((state) => state.bets);
-  const { state } = useAppSelector((state) => state.state);
-  const { currentCoefficient } = useAppSelector(
-    (state) => state.coefficentHistory
-  );
+  const { currentCoefficient, bets, state } = useAppSelector((state) => ({
+    bets: state.bets.bets,
+    state: state.state.state,
+    currentCoefficient: state.coefficentHistory.currentCoefficient,
+  }));
 
   const dispatch = useAppDispatch();
 
@@ -142,9 +145,18 @@ const ButtonGameBlock: FC = () => {
 
     if (bets[index].moneyBetted) {
       if (state === "flying") {
+        const won = bets[index].bid * currentCoefficient;
+
         dispatch(changeBetStatus({ index, value: "bid" }));
         dispatch(changeBetMoney({ index, value: false }));
-        alert(`taked! won - ${bets[index].bid * currentCoefficient}`);
+        dispatch(changeBetWinning({ index, value: currentCoefficient }));
+
+        dispatch(
+          alertHistoryActions.changeAlert({
+            coefficent: currentCoefficient,
+            won,
+          })
+        );
       }
     } else {
       if (status === "cancel") {
@@ -162,9 +174,12 @@ const ButtonGameBlock: FC = () => {
             dispatch(changeBetStatus({ index, value: "bid" }));
             dispatch(changeBetMoney({ index, value: true }));
           }
-        } else {
+        } else if (state === "waiting") {
           dispatch(changeBetStatus({ index, value: "wait" }));
           dispatch(changeBetMoney({ index, value: true }));
+        } else if (state === "betting") {
+          dispatch(changeBetStatus({ index, value: "cancel" }));
+          dispatch(changeBetMoney({ index, value: false }));
         }
       }
     }
@@ -173,6 +188,21 @@ const ButtonGameBlock: FC = () => {
   const onChangeState = useCallback(
     (index: TBetButtonsIndex) => {
       const status = bets[index].status;
+
+      if (state === "ending" && bets[index].winning) {
+        const won = bets[index].bid * bets[index].winning;
+
+        dispatch(addToBalance(won));
+        dispatch(
+          betHistoryActions.addToHistory({
+            coefficent: bets[index].winning,
+            put: bets[0].bid,
+            get: won,
+          })
+        );
+        dispatch(changeBetWinning({ index, value: null }));
+      }
+
       if (bets[index].moneyBetted) {
         if (state === "flying") {
           dispatch(changeBetStatus({ index, value: "take" }));
@@ -180,18 +210,28 @@ const ButtonGameBlock: FC = () => {
           if (status === "take") {
             dispatch(changeBetStatus({ index, value: "bid" }));
             dispatch(changeBetMoney({ index, value: false }));
+            dispatch(changeBetWinning({ index, value: null }));
           } else if (status === "cancel") {
             dispatch(changeBetStatus({ index, value: "wait" }));
             dispatch(changeBetMoney({ index, value: true }));
           }
+
+          dispatch(removeFromBalance(bets[index].bid));
+          dispatch(
+            betHistoryActions.addToHistory({
+              coefficent: currentCoefficient,
+              put: bets[index].bid,
+              get: null,
+            })
+          );
         } else {
-          if (status === "cancel") {
+          if (status === "cancel" && state === "waiting") {
             dispatch(changeBetStatus({ index, value: "wait" }));
             dispatch(changeBetMoney({ index, value: true }));
           }
         }
       } else {
-        if (status === "cancel") {
+        if (status === "cancel" && state === "waiting") {
           dispatch(changeBetStatus({ index, value: "wait" }));
           dispatch(changeBetMoney({ index, value: true }));
         }
@@ -203,7 +243,19 @@ const ButtonGameBlock: FC = () => {
   useEffect(() => {
     onChangeState(0);
     onChangeState(1);
+
+    if (state === "ending") {
+      dispatch(historyActions.addToHistory(currentCoefficient));
+    }
   }, [state]);
+
+  // useEffect(() => {
+  //   if (bets[0].status === "take" && bets[0].moneyBetted) {
+  //     dispatch(
+  //       changeBetWinning({ index: 0, value: currentCoefficient * bets[0].bid })
+  //     );
+  //   }
+  // }, [bets, currentCoefficient]);
 
   return (
     <div className={style.main}>

@@ -6,9 +6,10 @@ import balance from "./reducers/BalansSlice";
 import state from "./reducers/StateSlice";
 import data from "./reducers/data";
 import bets from "./reducers/BetSlice";
+import alert from "./reducers/AlertSlice";
 
 export const store = configureStore({
-  reducer: { coefficentHistory, betHistory, balance, data, state, bets },
+  reducer: { coefficentHistory, betHistory, balance, data, state, bets, alert },
 });
 
 export type AppDispatch = typeof store.dispatch;

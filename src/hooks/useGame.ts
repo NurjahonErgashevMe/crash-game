@@ -3,6 +3,7 @@ import { useCountUp } from "use-count-up";
 import { useWindowDimensions } from "./useWindowDimensions";
 import { getResponsiveOptions } from "@/helpers/getResponsiveOptions";
 import { useAppSelector } from "@/hooks/redux";
+import { TState } from "@/types/types";
 
 export const useGame = () => {
   const { state } = useAppSelector((state) => state.state);
@@ -13,6 +14,9 @@ export const useGame = () => {
   const windowDimensions = useWindowDimensions();
   const animWrapRef = useRef<HTMLDivElement>(null);
   const [start, setStart] = useState<boolean>(false);
+  const [loaderStatus, setLoaderStatus] = useState<"loader" | "wait" | "none">(
+    "loader"
+  );
   const [secondCountStatus, setSecondCountStatus] = useState<
     "flying" | "left" | "right"
   >("flying");
@@ -20,6 +24,9 @@ export const useGame = () => {
     width: number;
     height: number;
   }>();
+
+  const isStarted = loaderStatus === "none";
+  const isEnded = state === "ending";
 
   const wrapper_width = (multiply_by: number = 1): number =>
     wrapperDimensions ? wrapperDimensions.width * multiply_by : 0;
@@ -30,28 +37,6 @@ export const useGame = () => {
     () => getResponsiveOptions(windowDimensions.width),
     [windowDimensions.width]
   );
-
-  const toggleStatus = useCallback(() => {
-    switch (secondCountStatus) {
-      case "flying":
-        setSecondCountStatus("right");
-        wCountupResetRight();
-        wCountupBoyResetRight();
-        break;
-      case "right":
-        setSecondCountStatus("left");
-        wCountupResetLeft();
-        wCountupBoyResetLeft();
-        break;
-      case "left":
-        setSecondCountStatus("right");
-        wCountupResetRight();
-        wCountupBoyResetRight();
-        break;
-      default:
-        setSecondCountStatus("flying");
-    }
-  }, [secondCountStatus]);
 
   const {
     value: currentCoefficientValue,
@@ -123,6 +108,7 @@ export const useGame = () => {
     start: 0,
     end: wrapper_width(0.8),
     duration: 3,
+    // onComplete: () => toggleStatus(),
   });
 
   const { value: vwCountup2Left, reset: wCountupResetLeft } = useCountUp({
@@ -131,6 +117,7 @@ export const useGame = () => {
     end: wrapper_width(0.8),
     duration: 3,
     easing: "linear",
+    // onComplete: () => toggleStatus(),
   });
 
   const { value: vwCountup2Right, reset: wCountupResetRight } = useCountUp({
@@ -139,6 +126,7 @@ export const useGame = () => {
     end: wrapper_width(0.83),
     duration: 3,
     easing: "linear",
+    // onComplete: () => toggleStatus(),
   });
 
   const { value: vhCountup2, reset: hCountupReset2 } = useCountUp({
@@ -180,15 +168,38 @@ export const useGame = () => {
     [vwCountupBoyRight, vwCountupBoyLeft, vwCountupBoy]
   );
 
+  const toggleStatus = () => {
+    console.log(secondCountStatus);
+    switch (secondCountStatus) {
+      case "flying":
+        wCountupResetRight();
+        wCountupBoyResetRight();
+        setSecondCountStatus("right");
+        break;
+      case "right":
+        wCountupResetLeft();
+        wCountupBoyResetLeft();
+        setSecondCountStatus("left");
+        break;
+      case "left":
+        wCountupResetRight();
+        wCountupBoyResetRight();
+        setSecondCountStatus("right");
+        break;
+      default:
+        setSecondCountStatus("flying");
+    }
+  };
+
   const handleStart = useCallback(() => {
-    if (animWrapRef.current && state !== "ending") {
+    if (animWrapRef.current) {
       setStart(true);
       setWrapperDimensions({
         width: animWrapRef.current?.clientWidth,
         height: animWrapRef.current?.clientHeight,
       });
 
-      console.log("start");
+      // console.log("start");
 
       setSecondCountStatus("flying");
 
@@ -199,8 +210,8 @@ export const useGame = () => {
       wCountupReset2();
       hCountupReset2();
 
-      // wCountupResetLeft();
-      // wCountupResetRight();
+      wCountupResetLeft();
+      wCountupResetRight();
 
       currentCoefficientReset();
     }
@@ -208,7 +219,37 @@ export const useGame = () => {
 
   const handleEnd = useCallback(() => {
     setStart(false);
+    setSecondCountStatus("flying");
+    setTimeout(() => {
+      setLoaderStatus(() => "none");
+    }, 2000);
   }, []);
+
+  const onStateChange = useCallback(
+    (state: TState) => {
+      switch (state) {
+        case "ending":
+          handleEnd();
+          break;
+        case "waiting":
+          setLoaderStatus(() => "wait");
+          break;
+        case "flying":
+          handleStart();
+          setLoaderStatus(() => "none");
+          break;
+        case "betting":
+          setLoaderStatus(() => "loader");
+          break;
+      }
+    },
+    [loaderStatus]
+  );
+
+  useEffect(() => {
+    // console.log(state , 'state')
+    onStateChange(state);
+  }, [state]);
 
   useEffect(() => {
     currentCoefficientReset();
@@ -242,9 +283,11 @@ export const useGame = () => {
     boyCounts,
     handleStart,
     handleEnd,
-    isLoading: state === "betting",
-    isEnded: state === "ending",
     wrapper_width,
     wrapper_height,
+    onStateChange,
+    loaderStatus,
+    setLoaderStatus,
+    isEnded,
   };
 };

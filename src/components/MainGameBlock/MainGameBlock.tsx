@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useEffect } from "react";
 import styles from "./MainGameBlock.module.scss";
 import clsx from "clsx";
 import { Loader } from "../Loader/Loader";
@@ -21,9 +21,9 @@ const MainGameBlock: React.FC = () => {
     boyCounts,
     handleStart,
     handleEnd,
-    isLoading,
-    isEnded,
     wrapper_height,
+    loaderStatus,
+    isEnded,
   } = useGame();
 
   return (
@@ -31,16 +31,10 @@ const MainGameBlock: React.FC = () => {
       <div className={styles.jetMainAnimationContent}>
         <div
           className={clsx(styles.jetMainSchedule, styles.scheduleActive, {
-            [styles.scheduleEnd]: isLoading || isEnded,
+            [styles.scheduleEnd]: loaderStatus !== "none",
           })}
         >
-          <div
-            className={clsx(styles.loading, {
-              [styles.hide]: !isLoading,
-            })}
-          >
-            <Loader duration={5} onStart={handleStart} onEnded={handleEnd} />
-          </div>
+          <Loader duration={5} onStart={handleStart} onEnded={handleEnd} />
 
           <div className={clsx(styles.scheduleBg, styles.scheduleBg1)} />
           <div className={clsx(styles.scheduleBg, styles.scheduleBg2)} />
@@ -91,30 +85,22 @@ const MainGameBlock: React.FC = () => {
                   className={styles.luckyJet__svgStroke}
                   fill="transparent"
                   stroke="url(#grad_stroke)"
-                  d={
-                    isLoading
-                      ? `M 0 0 Q 0 0 Q 0 0`
-                      : `M 0 ${wrapper_height()} Q ${fixedThree(
-                          Number(vwCountup)
-                        )} ${wrapper_height()} ${fixedThree(
-                          Number(secondCounts[secondCountStatus])
-                        )} ${fixedThree(Number(vhCountup2))}`
-                  }
+                  d={`M 0 ${wrapper_height()} Q ${fixedThree(
+                    Number(vwCountup)
+                  )} ${wrapper_height()} ${fixedThree(
+                    Number(secondCounts[secondCountStatus])
+                  )} ${fixedThree(Number(vhCountup2))}`}
                 ></path>
                 <path
                   className={styles.luckyJet__svgGrad}
                   fill="url(#grad)"
-                  d={
-                    isLoading
-                      ? `M 0 0 Q 0 0 0 0 L 0 0 Z`
-                      : `M 0 ${wrapper_height()} Q ${fixedThree(
-                          Number(vwCountup)
-                        )} ${wrapper_height()} ${fixedThree(
-                          Number(secondCounts[secondCountStatus])
-                        )} ${fixedThree(Number(vhCountup2))} L ${fixedThree(
-                          Number(secondCounts[secondCountStatus])
-                        )} ${wrapper_height()} Z`
-                  }
+                  d={`M 0 ${wrapper_height()} Q ${fixedThree(
+                    Number(vwCountup)
+                  )} ${wrapper_height()} ${fixedThree(
+                    Number(secondCounts[secondCountStatus])
+                  )} ${fixedThree(Number(vhCountup2))} L ${fixedThree(
+                    Number(secondCounts[secondCountStatus])
+                  )} ${wrapper_height()} Z`}
                 ></path>
               </g>
             </svg>

@@ -18,7 +18,7 @@ export const historySlice = createSlice({
   initialState,
   reducers: {
     addToHistory: (state, action: PayloadAction<number>) => {
-      state.coefficients.push(action.payload);
+      state.coefficients.unshift(action.payload);
     },
     changeCoefficient: (state, action: PayloadAction<number>) => {
       state.currentCoefficient = action.payload;
@@ -30,6 +30,6 @@ export const historySlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { addToHistory, changeCoefficient , changePrevCoefficient } = historySlice.actions;
+export const historyActions = historySlice.actions;
 
 export default historySlice.reducer;

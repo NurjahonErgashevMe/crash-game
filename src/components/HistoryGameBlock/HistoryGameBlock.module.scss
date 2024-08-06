@@ -4,7 +4,7 @@
     height: 70px;
     top: 0;
     left: 0;
-    z-index: 2200;
+    z-index: 10;
     overflow: hidden;
     border-bottom: 0.5px solid rgb(35, 29, 71);
 
@@ -101,7 +101,6 @@
 
     .coefficient {
         min-width: 58px;
-        margin: auto;
         height: 28px;
         display: grid;
         -webkit-box-pack: center;

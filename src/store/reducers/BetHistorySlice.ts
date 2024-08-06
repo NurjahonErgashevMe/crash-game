@@ -3,7 +3,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface IBet {
   put: number;
-  get: number;
+  get: number | null;
   coefficent: number;
 }
 
@@ -22,11 +22,11 @@ export const betHistorySlice = createSlice({
   initialState,
   reducers: {
     addToHistory: (state, action: PayloadAction<IBet>) => {
-      state.bet.push(action.payload);
+      state.bet.unshift(action.payload);
     },
   },
 });
 
-export const { addToHistory } = betHistorySlice.actions;
+export const betHistoryActions = betHistorySlice.actions;
 
 export default betHistorySlice.reducer;
