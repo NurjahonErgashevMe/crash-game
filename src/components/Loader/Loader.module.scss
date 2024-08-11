@@ -70,10 +70,14 @@
 }
 
 .gameWaiting {
-    font-family: "Rocketfont";
-    font-size: 16px;
-    line-height: 1.5;
-    color: #fafafa;
+    max-width: 450px;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: 39px;
+    letter-spacing: 0.06em;
+    text-align: center;
+    color: rgb(255, 255, 255);
     text-transform: uppercase;
 }
 
@@ -123,10 +127,12 @@
 }
 
 .loadingText {
-    font-family: "Rocketfont";
-    font-size: 16px;
-    line-height: 1.5;
-    color: #fafafa;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: 39px;
+    letter-spacing: 0.06em;
+    text-align: center;
+    color: rgb(255, 255, 255);
     text-transform: uppercase;
-    margin-top: 10px;
 }

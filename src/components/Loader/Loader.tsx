@@ -28,7 +28,6 @@ export const Loader: FC<LoaderProps> = ({ duration = 10, className }) => {
     return () => clearTimeout(timeout);
   }, [state, duration]);
 
-
   return (
     <div
       className={clsx(styles.loading, {
@@ -136,7 +135,7 @@ export const Loader: FC<LoaderProps> = ({ duration = 10, className }) => {
               </g>
             </svg>
             <span className={styles.gameWaiting} data-lang="waiting">
-              waiting for a bid
+              Ожидание следующего раунда
             </span>
             <div
               className={styles.straightLineLoader}
@@ -150,7 +149,7 @@ export const Loader: FC<LoaderProps> = ({ duration = 10, className }) => {
             </div>
           </>
         ) : loaderStatus === "wait" ? (
-          <span className={styles.loadingText}>Wait</span>
+          <span className={styles.loadingText}>Ожидание</span>
         ) : null}
       </div>
     </div>

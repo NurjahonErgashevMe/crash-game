@@ -17,6 +17,7 @@ $main-color: linear-gradient(90deg, rgb(31, 24, 61) 0%, rgb(38, 31, 77) 100%);
 }
 
 .bet {
+  width: 100%;
   position: relative;
   display: grid;
   grid-template-rows: 46px 100px;
@@ -48,7 +49,7 @@ $main-color: linear-gradient(90deg, rgb(31, 24, 61) 0%, rgb(38, 31, 77) 100%);
 }
 
 .checkboxLabel {
-  font-family: Manrope;
+
   font-size: 12px;
   font-weight: 700;
   line-height: 17px;
@@ -72,7 +73,7 @@ $main-color: linear-gradient(90deg, rgb(31, 24, 61) 0%, rgb(38, 31, 77) 100%);
   &.disable {}
 
   .firstOutputCoefficientIput {
-    font-family: Manrope;
+
     font-size: 13px;
     font-style: normal;
     font-weight: 700;
@@ -109,7 +110,7 @@ $main-color: linear-gradient(90deg, rgb(31, 24, 61) 0%, rgb(38, 31, 77) 100%);
     align-items: center;
     grid-auto-columns: max-content;
     grid-auto-flow: column;
-    font-family: Manrope;
+
     font-style: normal;
     font-weight: bold;
     font-size: 13px;
@@ -122,7 +123,7 @@ $main-color: linear-gradient(90deg, rgb(31, 24, 61) 0%, rgb(38, 31, 77) 100%);
     transition: opacity 0.16s;
 
     div:first-child {
-      font-family: Manrope;
+
       color: #fff;
     }
 
@@ -170,7 +171,7 @@ $main-color: linear-gradient(90deg, rgb(31, 24, 61) 0%, rgb(38, 31, 77) 100%);
   .button {
     display: grid;
     position: relative;
-    font-family: Manrope;
+
     font-style: normal;
     font-weight: bold;
     font-size: 11px;
@@ -186,7 +187,6 @@ $main-color: linear-gradient(90deg, rgb(31, 24, 61) 0%, rgb(38, 31, 77) 100%);
     height: auto;
   }
 
-  .buttonContent {}
 
   .inputWrapper {
     position: relative;
@@ -202,10 +202,8 @@ $main-color: linear-gradient(90deg, rgb(31, 24, 61) 0%, rgb(38, 31, 77) 100%);
     outline: none;
     width: calc(100% + 55px);
     min-width: 0px;
-    font-family: Rocketfont;
     font-size: 16px;
     font-style: normal;
-    font-weight: 400;
     line-height: 19px;
     letter-spacing: 0px;
     text-align: center;
@@ -213,6 +211,7 @@ $main-color: linear-gradient(90deg, rgb(31, 24, 61) 0%, rgb(38, 31, 77) 100%);
     caret-color: white;
     padding: 0px;
     margin-left: -25px;
+    font-weight: 700;
   }
 
   .inputOverlay {
@@ -228,7 +227,7 @@ $main-color: linear-gradient(90deg, rgb(31, 24, 61) 0%, rgb(38, 31, 77) 100%);
     align-items: center;
     grid-auto-columns: max-content;
     grid-auto-flow: column;
-    font-family: Rocketfont;
+    // font-family: Rocketfont;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -242,6 +241,7 @@ $main-color: linear-gradient(90deg, rgb(31, 24, 61) 0%, rgb(38, 31, 77) 100%);
     div {
       &:last-child {
         color: #fff;
+        font-weight: 700;
       }
     }
   }
@@ -267,7 +267,7 @@ $main-color: linear-gradient(90deg, rgb(31, 24, 61) 0%, rgb(38, 31, 77) 100%);
     width: 100%;
     display: grid;
     position: relative;
-    font-family: Manrope;
+
     font-style: normal;
     font-weight: bold;
     font-size: 11px;
@@ -285,6 +285,7 @@ $main-color: linear-gradient(90deg, rgb(31, 24, 61) 0%, rgb(38, 31, 77) 100%);
     .amount {
       padding: 0px 15px;
     }
+
   }
 
   .makeBetButton {
@@ -351,7 +352,6 @@ $main-color: linear-gradient(90deg, rgb(31, 24, 61) 0%, rgb(38, 31, 77) 100%);
     height: 100%;
     width: 100%;
     border-radius: 12px;
-    font-family: Manrope !important;
     font-size: 22px;
     font-style: normal;
     line-height: 20px;
@@ -363,9 +363,9 @@ $main-color: linear-gradient(90deg, rgb(31, 24, 61) 0%, rgb(38, 31, 77) 100%);
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    font-weight: 800;
 
     font-variant-numeric: tabular-nums;
-    font-weight: 700;
     cursor: pointer;
 
     &.take {
@@ -386,7 +386,7 @@ $main-color: linear-gradient(90deg, rgb(31, 24, 61) 0%, rgb(38, 31, 77) 100%);
   min-width: 26px;
   min-height: 26px;
   color: rgb(148, 138, 197);
-  font-family: Manrope;
+
   font-size: 10px;
   font-style: normal;
   font-weight: 600;
@@ -403,6 +403,11 @@ $main-color: linear-gradient(90deg, rgb(31, 24, 61) 0%, rgb(38, 31, 77) 100%);
   z-index: 1;
   transition: opacity 0.32s, box-shadow 0.32s, background 0.16s;
   background: rgb(35, 29, 71);
+
+
+  &:hover {
+    background: rgb(59, 50, 112);
+  }
 }
 
 

@@ -185,8 +185,6 @@
 }
 
 .currentCoefficient {
-  font-family: Manrope;
-
   animation-timing-function: unset;
   animation-delay: unset;
   animation-iteration-count: unset;
@@ -231,10 +229,9 @@
   animation-fill-mode: forwards;
   transition: height 0.4s;
 
-  font-family: Manrope;
   font-size: 34px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 900;
   line-height: 45px;
   letter-spacing: 0px;
   text-transform: uppercase;

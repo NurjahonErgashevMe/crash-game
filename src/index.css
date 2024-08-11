@@ -1,10 +1,22 @@
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap");
 
-@font-face {
+/* @font-face {
   font-family: "Rocketfont";
   font-weight: 300;
-  src: url("/public/fonts/Rocketfont.otf") format("opentype");
+  src: url("/public/fonts/PresicavLt-Regular.ttf") format("opentype");
 }
+@font-face {
+  font-family: "Rocketfont";
+  font-weight: 900;
+  font-style: normal;
+  src: url("/public/fonts/PresicavHv-Regular.ttf") format("opentype");
+}
+@font-face {
+  font-family: 'PresicavRg';
+  font-weight: bold;
+  font-style: normal;
+  src: url("/public/fonts/PresicavRg-Bold.ttf") format("opentype");
+} */
 
 * {
   box-sizing: border-box;
@@ -12,7 +24,7 @@
   text-decoration: none;
   padding: 0;
   margin: 0;
-  font-family: "Rocketfont", sans-serif;
+  font-family: Manrope, sans-serif;
   font-display: swap;
   font-style: normal;
   font-weight: 300;

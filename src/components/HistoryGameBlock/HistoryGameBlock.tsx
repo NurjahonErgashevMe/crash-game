@@ -1,10 +1,10 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import clsx from "clsx";
 
 import styles from "./HistoryGameBlock.module.scss";
 
 import WatchIcon from "public/watch.svg";
-import XIcon from "public/x.svg";
+// import XIcon from "public/x.svg";
 
 import { getCoefficentColor } from "@/helpers/getCoefficentColor";
 import { useAppSelector } from "@/hooks/redux";
