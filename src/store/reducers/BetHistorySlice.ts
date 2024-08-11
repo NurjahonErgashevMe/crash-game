@@ -23,6 +23,9 @@ export const betHistorySlice = createSlice({
   reducers: {
     addToHistory: (state, action: PayloadAction<IBet>) => {
       state.bet.unshift(action.payload);
+      if (state.bet.length > 10) {
+        state.bet.pop();
+      }
     },
   },
 });

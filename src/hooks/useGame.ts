@@ -16,9 +16,6 @@ export const useGame = () => {
     "loader"
   );
 
-  console.log(prevCoefficient , 'prev')
-  console.log(currentCoefficient , 'current')
-
   const {
     value: currentCoefficientValue,
     reset: currentCoefficientReset,
