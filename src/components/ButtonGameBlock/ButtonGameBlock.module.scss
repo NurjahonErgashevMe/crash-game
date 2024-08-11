@@ -4,6 +4,7 @@ $main-color: linear-gradient(90deg, rgb(31, 24, 61) 0%, rgb(38, 31, 77) 100%);
   width: 100%;
   gap: 10px;
   height: 200px;
+  border-top: 1px solid rgb(28, 21, 55);
 }
 
 .container {
@@ -147,7 +148,7 @@ $main-color: linear-gradient(90deg, rgb(31, 24, 61) 0%, rgb(38, 31, 77) 100%);
     pointer-events: all;
     transition: opacity 0.32s;
 
-    &.disable{
+    &.disable {
       opacity: 0.5;
     }
   }
@@ -199,7 +200,7 @@ $main-color: linear-gradient(90deg, rgb(31, 24, 61) 0%, rgb(38, 31, 77) 100%);
     background: none;
     border: none;
     outline: none;
-    width: calc(100% + 25px);
+    width: calc(100% + 55px);
     min-width: 0px;
     font-family: Rocketfont;
     font-size: 16px;
@@ -237,6 +238,12 @@ $main-color: linear-gradient(90deg, rgb(31, 24, 61) 0%, rgb(38, 31, 77) 100%);
     color: transparent;
     pointer-events: none;
     opacity: 1;
+
+    div {
+      &:last-child {
+        color: #fff;
+      }
+    }
   }
 
   .actions {
@@ -333,8 +340,8 @@ $main-color: linear-gradient(90deg, rgb(31, 24, 61) 0%, rgb(38, 31, 77) 100%);
       }
     }
 
-    &.wait{
-      ::after{
+    &.wait {
+      ::after {
         background: none;
       }
     }
@@ -352,16 +359,25 @@ $main-color: linear-gradient(90deg, rgb(31, 24, 61) 0%, rgb(38, 31, 77) 100%);
     text-align: center;
     color: rgb(250, 250, 250);
     text-shadow: rgb(138, 138, 138) 0px 0px 20px;
-    display: grid;
-    -webkit-box-pack: center;
-    place-content: center;
-    grid-auto-rows: max-content;
-    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
     font-variant-numeric: tabular-nums;
     font-weight: 700;
     cursor: pointer;
 
+    &.take {
+      justify-content: start;
+      padding-top: 7px;
+      gap: 3px;
+    }
 
+    .won {
+      font-size: 14px;
+      font-weight: 200;
+    }
   }
 }
 

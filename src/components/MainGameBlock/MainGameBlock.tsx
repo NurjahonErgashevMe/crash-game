@@ -1,16 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import clsx from "clsx";
 import { Loader } from "../Loader/Loader";
 import { useGame } from "@/hooks/useGame";
 import { useAppSelector } from "@/hooks/redux";
 
 import styles from "./MainGameBlock.module.scss";
+import { useWindowDimensions } from "@/hooks/useWindowDimensions";
 
 const MainGameBlock: React.FC = () => {
-  const { state } = useAppSelector((state) => ({
+  const dimensions = useWindowDimensions();
+  const { state, jet } = useAppSelector((state) => ({
     state: state.state.state,
+    jet: state.jet.jet,
   }));
   const { animWrapRef, currentCoefficientValue, handleStart } = useGame();
+
+  useEffect(() => {
+    jet?.updateSizes();
+    if (state === "ending") {
+      jet?.end();
+    }
+  }, [dimensions]);
 
   return (
     <div className={styles.jetMainAnimation}>

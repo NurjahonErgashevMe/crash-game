@@ -197,8 +197,8 @@ export function createLuckyJet(userOptions: LuckyJetOptions = {}) {
     flyOutTween = gsap.to(pilot, {
       duration: duration,
       ease: "none",
-      x: canvasWidth + 2000,
-      y: -100,
+      x: canvasWidth + 100,
+      y: -50,
       repeatRefresh: true,
       onComplete: () => {
         canvas.classList.remove("_animating");

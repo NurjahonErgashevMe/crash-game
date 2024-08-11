@@ -11,7 +11,7 @@ export type TLuckyJet = {
 
 const App: FC = () => {
   return (
-    <div>
+    <div className="container">
       <Header />
       <MainContent />
     </div>

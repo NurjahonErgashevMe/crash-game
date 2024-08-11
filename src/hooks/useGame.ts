@@ -16,6 +16,9 @@ export const useGame = () => {
     "loader"
   );
 
+  console.log(prevCoefficient , 'prev')
+  console.log(currentCoefficient , 'current')
+
   const {
     value: currentCoefficientValue,
     reset: currentCoefficientReset,
@@ -23,7 +26,7 @@ export const useGame = () => {
     isCounting: start,
     start: prevCoefficient ?? 0,
     end: currentCoefficient ?? 1,
-    duration: 2.3,
+    duration: 200,
     decimalPlaces: 2,
   });
 
@@ -37,7 +40,6 @@ export const useGame = () => {
   const handleEnd = useCallback(() => {
     if (jet) {
       jet?.end();
-      console.log("end()");
       setTimeout(() => {
         setLoaderStatus(() => "none");
       }, 2000);
@@ -48,7 +50,6 @@ export const useGame = () => {
     (state: TState) => {
       switch (state) {
         case "ending":
-          console.log("ending end()");
           handleEnd();
           break;
         case "waiting":

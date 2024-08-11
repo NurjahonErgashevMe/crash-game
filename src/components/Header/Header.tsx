@@ -9,7 +9,7 @@ import ChatIcon from "public/chat.svg";
 import MoneyIcon from "public/money.svg";
 import WhatIcon from "public/what.svg";
 import { useAppSelector } from "@/hooks/redux";
-import { formatNumberWithSpaces } from "@/helpers/formatWithSpace";
+import { formatNumberWithSpaces, formatStringWithSpaces } from "@/helpers/formatWithSpace";
 
 const Header: FC = () => {
   const { balance } = useAppSelector((state) => state.balance);
@@ -40,7 +40,7 @@ const Header: FC = () => {
             <div className={style.money}>
               {/* <img src="/public/money.svg" />{" "} */}
               <MoneyIcon />
-              <p className={style.text}>{formatNumberWithSpaces(balance)} ₽</p>
+              <p className={style.text}>{formatStringWithSpaces(balance?.toFixed(2))} ₽</p>
             </div>
             <div className={style.separator}></div> {/* Добавляем линию */}
             <div className={style.collection}>

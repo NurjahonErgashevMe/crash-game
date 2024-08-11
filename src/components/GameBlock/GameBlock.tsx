@@ -21,13 +21,13 @@ const GameBlock: FC = () => {
     jet: state.jet.jet,
   }));
 
-  const prevDataCoufficent = usePrevious(data?.current_coefficients?.[0]);
+  const prevDataCoefficient = usePrevious(data?.current_coefficients?.[0]);
   const bufferRef = useRef<any[]>([]);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
       dispatch(fetchData());
-    }, 500);
+    }, 100);
 
     return () => clearInterval(intervalId);
   }, [dispatch]);
@@ -60,9 +60,11 @@ const GameBlock: FC = () => {
         if (bufferedData) {
           // console.log(bufferedData , 'bufferedData')
           dispatch(changeState(bufferedData.state));
-          dispatch(
-            historyActions.changePrevCoefficient(prevDataCoufficent ?? null)
-          );
+          if (bufferedData.current_coefficients?.[0] !== prevDataCoefficient) {
+            dispatch(
+              historyActions.changePrevCoefficient(prevDataCoefficient ?? null)
+            );
+          }
           dispatch(
             historyActions.changeCoefficient(
               bufferedData.current_coefficients?.[0]
@@ -71,7 +73,7 @@ const GameBlock: FC = () => {
         }
       }, 2000);
     }
-  }, [data, dispatch, prevDataCoufficent]);
+  }, [data, dispatch, prevDataCoefficient]);
 
   return (
     <div className={style.game}>

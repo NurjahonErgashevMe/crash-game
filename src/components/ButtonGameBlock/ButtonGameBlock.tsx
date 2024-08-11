@@ -248,15 +248,6 @@ const ButtonGameBlock: FC = () => {
       dispatch(historyActions.addToHistory(currentCoefficient));
     }
   }, [state]);
-
-  // useEffect(() => {
-  //   if (bets[0].status === "take" && bets[0].moneyBetted) {
-  //     dispatch(
-  //       changeBetWinning({ index: 0, value: currentCoefficient * bets[0].bid })
-  //     );
-  //   }
-  // }, [bets, currentCoefficient]);
-
   return (
     <div className={style.main}>
       <div className={style.container}>

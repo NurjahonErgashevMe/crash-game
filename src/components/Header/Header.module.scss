@@ -1,5 +1,4 @@
 .header {
-  padding-left: 15px;
   height: 60px;
   border-bottom: 1px solid rgb(28, 21, 55);
 }
@@ -11,26 +10,16 @@
   height: 16px;
   width: 100%;
   height: 100%;
-  max-width: 1440px;
 }
 
 .logo {
-  width: 20%;
+  width: 30%;
   max-width: 300px;
   height: 100%;
   display: flex;
   align-items: center;
   border-right: 0.5px solid rgb(28, 21, 55);
 }
-
-// .logo::after {
-//   content: "";
-//   position: absolute;
-//   top: -23px;
-//   bottom: -23px;
-//   right: 0;
-//   width: 1px;
-// }
 
 .events {
   width: 80%;
@@ -39,7 +28,6 @@
   justify-content: flex-end;
   margin: 15px 1px;
   margin-left: auto;
-  margin-right: 20px;
 }
 
 .one {

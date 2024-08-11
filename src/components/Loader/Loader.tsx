@@ -28,11 +28,6 @@ export const Loader: FC<LoaderProps> = ({ duration = 10, className }) => {
     return () => clearTimeout(timeout);
   }, [state, duration]);
 
-  console.log(loaderStatus);
-
-  // useEffect(() => {
-  //   console.log(loaderStatus, "status");
-  // }, [loaderStatus]);
 
   return (
     <div

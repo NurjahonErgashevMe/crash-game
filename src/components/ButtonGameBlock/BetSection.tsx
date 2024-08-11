@@ -5,6 +5,7 @@ import style from "./ButtonGameBlock.module.scss";
 import clsx from "clsx";
 import { formatNumberWithSpaces } from "@/helpers/formatWithSpace";
 import { TBet, TBetStatus } from "@/types/types";
+import { useGame } from "@/hooks/useGame";
 
 const betButtonTexts: Record<TBetStatus, string> = {
   bid: "СТАВКА",
@@ -34,20 +35,17 @@ interface BetSectionProps {
 const BetSection: FC<BetSectionProps> = ({
   bets,
   state,
-  dispatch,
   register,
-  setValue,
-  getValues,
   changeAutoOutputCoefficient,
   blurAutoOutputCoefficient,
-  changeAutoBid,
-  changeAutoOutput,
   removeBid,
   addBid,
   handleBet,
   betIndex,
   changeBid,
 }) => {
+  const { currentCoefficientValue } = useGame();
+
   const isAutoBidDisabled = state === "waiting";
   const isAutoOutputDisabled = state === "flying";
 
@@ -195,10 +193,18 @@ const BetSection: FC<BetSectionProps> = ({
           disabled={bets[betIndex].status === "wait"}
           onClick={() => handleBet(betIndex)}
         >
-          <div className={style.makeBetButtonContent}>
-            {betButtonTexts[bets[betIndex].status] === "take"
-              ? currentCoef
-              : null}
+          <div
+            className={clsx(style.makeBetButtonContent, {
+              [style.take]: betButtonTexts[bets[betIndex].status] === "ЗАБРАТЬ",
+            })}
+          >
+            {betButtonTexts[bets[betIndex].status] === "ЗАБРАТЬ" ? (
+              <span className={style.won}>
+                {(Number(currentCoefficientValue) * bets[betIndex].bid).toFixed(
+                  2
+                ) + "₽"}
+              </span>
+            ) : null}
             {betButtonTexts[bets[betIndex].status]}
           </div>
         </button>
