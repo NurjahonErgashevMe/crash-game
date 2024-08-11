@@ -13,7 +13,12 @@ import jet from "./JetSlice";
 
 const reducer = combineReducers({
   coefficentHistory: persistReducer(
-    { key: "coefficients", storage, keyPrefix: "" },
+    {
+      key: "coefficients",
+      storage,
+      keyPrefix: "",
+      whitelist: ["coefficients"],
+    },
     coefficentHistory
   ),
   betHistory: persistReducer(

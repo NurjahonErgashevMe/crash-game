@@ -19,6 +19,9 @@ export const historySlice = createSlice({
   reducers: {
     addToHistory: (state, action: PayloadAction<number>) => {
       state.coefficients.unshift(action.payload);
+      if (state.coefficients.length > 30) {
+        state.coefficients.pop();
+      }
     },
     changeCoefficient: (state, action: PayloadAction<number>) => {
       state.currentCoefficient = action.payload;
