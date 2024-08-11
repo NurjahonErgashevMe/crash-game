@@ -1,7 +1,6 @@
 .section {
-  width: 30%;
+  width: 300px;
   border-right: 1px solid rgb(28, 21, 55);
-  max-width: 300px;
 
   display: flex;
   overflow-x: hidden;
@@ -11,6 +10,7 @@
   &::-webkit-scrollbar {
     display: none;
   }
+
 }
 
 .container {
