@@ -3,6 +3,7 @@ import { useGame } from "@/hooks/useGame";
 import clsx from "clsx";
 
 import styles from "./Loader.module.scss";
+import { useAppSelector } from "@/hooks/redux";
 
 interface LoaderProps {
   duration?: number;
@@ -12,19 +13,26 @@ interface LoaderProps {
 }
 
 export const Loader: FC<LoaderProps> = ({ duration = 10, className }) => {
+  const state = useAppSelector((state) => state.state.state);
   const { setLoaderStatus, loaderStatus } = useGame();
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      setLoaderStatus("wait");
+      if (state === "waiting" || state === "betting") {
+        setLoaderStatus("wait");
+      } else {
+        setLoaderStatus("none");
+      }
     }, duration * 1000);
 
     return () => clearTimeout(timeout);
-  }, []);
+  }, [state, duration]);
 
-  useEffect(() => {
-    console.log(loaderStatus, "status");
-  }, [loaderStatus]);
+  console.log(loaderStatus);
+
+  // useEffect(() => {
+  //   console.log(loaderStatus, "status");
+  // }, [loaderStatus]);
 
   return (
     <div

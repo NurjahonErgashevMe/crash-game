@@ -1,20 +1,9 @@
 .jetMainAnimation {
   width: 100%;
-  height: calc(80% - 70px);
+  height: calc(100% - 270px);
   position: relative;
   overflow: hidden;
 
-  @media (max-width: 2000px) {
-    height: 65%;
-  }
-
-  @media (max-width: 1640px) {
-    height: 60%;
-  }
-
-  @media (max-width: 1440px) {
-    height: 55%;
-  }
 
   .jetMainAnimationContent {
     position: relative;
@@ -125,6 +114,8 @@
     height: 100%;
     pointer-events: none;
     position: absolute;
+    bottom: 20px;
+    left: 20px;
   }
 
   &__pilotImg {

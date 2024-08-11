@@ -7,9 +7,21 @@ import state from "./reducers/StateSlice";
 import data from "./reducers/data";
 import bets from "./reducers/BetSlice";
 import alert from "./reducers/AlertSlice";
+import jet from "./reducers/JetSlice";
 
 export const store = configureStore({
-  reducer: { coefficentHistory, betHistory, balance, data, state, bets, alert },
+  reducer: {
+    coefficentHistory,
+    betHistory,
+    balance,
+    data,
+    state,
+    bets,
+    alert,
+    jet,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ serializableCheck: false }),
 });
 
 export type AppDispatch = typeof store.dispatch;
