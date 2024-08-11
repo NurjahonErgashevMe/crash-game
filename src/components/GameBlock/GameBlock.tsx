@@ -39,11 +39,11 @@ const GameBlock: FC = () => {
       svgOffsetX: 30,
       svgOffsetY: 60,
       svgCurve: 66,
-      glideOffsetX: 7,
-      glideOffsetY: 4,
-      stage1Duration: 2,
-      stage2Duration: 1,
-      stage3Duration: 0.4,
+      glideOffsetX: 5.2,
+      glideOffsetY: 2.2,
+      stage1Duration: 2.4,
+      stage2Duration: 1.3,
+      stage3Duration: 0.7,
     });
 
     luckyJet.updateSizes();
@@ -58,7 +58,6 @@ const GameBlock: FC = () => {
       setTimeout(() => {
         const bufferedData = bufferRef.current.shift();
         if (bufferedData) {
-          // console.log(bufferedData , 'bufferedData')
           dispatch(changeState(bufferedData.state));
           if (bufferedData.current_coefficients?.[0] !== prevDataCoefficient) {
             dispatch(

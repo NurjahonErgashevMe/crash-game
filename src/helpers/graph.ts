@@ -35,7 +35,6 @@ export function createLuckyJet(userOptions: LuckyJetOptions = {}) {
     ".lucky-jet__svg-stroke"
   ) as SVGElement;
   const svgGrad = document.querySelector(".lucky-jet__svg-grad") as SVGElement;
-  console.log(canvas, "canvas");
 
   let animating = false;
   let timeline: gsap.core.Timeline;
@@ -237,7 +236,7 @@ export function createLuckyJet(userOptions: LuckyJetOptions = {}) {
   }
 
   function rand(num: number) {
-    return Math.random() * (num + num) - num;
+    return Math.random() * (num + (num * 0.5)) - num;
   }
 
   function onResize() {
