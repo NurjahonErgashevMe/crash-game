@@ -154,12 +154,11 @@ $main-color: linear-gradient(90deg, rgb(31, 24, 61) 0%, rgb(38, 31, 77) 100%);
     &.disable {
 
       .betControl,
-      /* Классы, где находится текст */
       .buttonContent,
       .inputWrapper,
       .actions {
         opacity: 0.5;
-        /* Прозрачность только для текста и контента */
+        pointer-events: none;
       }
     }
   }
